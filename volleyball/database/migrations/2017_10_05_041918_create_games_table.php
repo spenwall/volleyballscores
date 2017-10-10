@@ -22,7 +22,7 @@ class CreateGamesTable extends Migration
             $table->enum('winner', ['team1', 'team2', 'tie']);
             $table->string('location');
             $table->string('court');
-            $table->enum('league');
+            $table->enum('league', ['women', 'co-ed']);
             $table->timestamps();
         });
     }
