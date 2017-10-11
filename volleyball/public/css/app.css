@@ -8350,7 +8350,7 @@ button.close {
   }
 }
 
-form-signin {
+.form-signin {
   max-width: 250px;
   margin: 0 auto;
 }
