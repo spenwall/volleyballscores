@@ -16,14 +16,17 @@ class CreateGamesTable extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->increments('id');
             $table->dateTime('date');
-            $table->string('team1');
-            $table->string('team2');
+            $table->integer('team1')->unsigned();
+            $table->integer('team2')->unsigned();
             $table->string('round');
-            $table->enum('winner', ['team1', 'team2', 'tie']);
+            $table->enum('winner', ['none','team1', 'team2', 'tie'])->default('none');
             $table->string('location');
             $table->string('court');
             $table->enum('league', ['women', 'co-ed']);
             $table->timestamps();
+
+            $table->foreign('team1')->references('id')->on('teams');
+            $table->foreign('team2')->references('id')->on('teams');
         });
     }
 

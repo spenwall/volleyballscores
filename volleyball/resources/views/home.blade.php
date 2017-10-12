@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    {{$name}} You are logged in for {{$team}}
                 </div>
             </div>
         </div>
