@@ -4,3 +4,4 @@
 .local/share/composer/.htaccess
 .config/composer/.htaccess
 .local/share/composer/.htaccess
+.sudo_as_admin_successful
