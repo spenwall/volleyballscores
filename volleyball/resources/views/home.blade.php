@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    {{$name}} You are logged in for {{$team}}
+                    Welcome {{$team}} please record your wins below.
                 </div>
             </div>
         </div>
