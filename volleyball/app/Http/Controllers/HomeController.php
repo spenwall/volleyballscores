@@ -26,12 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $name = $user->name;
-        $team = $user->team;
-        $teamObject = team::find($team->id);
-        $games = $teamObject->games();
-        return view('home', ['name' => $name, 'team' => $team, 'games' => $games]);
+        $data = $this->_data();
+        return view('home', $data);
     }
 
     public function scores()
@@ -41,11 +37,19 @@ class HomeController extends Controller
         $gameRow = games::find($game);
         $gameRow->winner = $winner;
         $gameRow->save();
+        $data = $this->_data();
+        $data['gameUpdated'] = $game;
+        return view('home', $data);
+    }
+
+    private function _data()
+    {
         $user = Auth::user();
         $name = $user->name;
         $team = $user->team;
         $teamObject = team::find($team->id);
         $games = $teamObject->games();
-        return view('home', ['name' => $name, 'team' => $team, 'games' => $games]);
+        $data = array('name' => $name, 'team' => $team, 'games' => $games);
+        return $data;
     }
 }

@@ -8355,3 +8355,10 @@ button.close {
   margin: 0 auto;
 }
 
+.score-recorded {
+  display: inline-block;
+  color: #1da948;
+  margin-left: 10px;
+  font-weight: 700;
+}
+

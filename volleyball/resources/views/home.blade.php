@@ -29,7 +29,7 @@
                             <input type="radio" name="winner" value="{{$game['team2']}}" {{ $game['winner'] == $game['team2'] ? "checked='checked'" : ""}}>{{$game['team2_rank']}} {{$game['team2_name']}}<br />
                         </div>
                         </br>
-                        <input type="submit" value="Submit">
+                        <input type="submit" value="Submit"><div class="score-recorded">{{ $gameUpdated == $game['id'] ? 'Success' : ''}}</div>
                         </form>
                     @endforeach
 
