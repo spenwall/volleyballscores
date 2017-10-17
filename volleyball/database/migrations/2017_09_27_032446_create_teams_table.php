@@ -20,7 +20,8 @@ class CreateTeamsTable extends Migration
             $table->string('contact_email');
             $table->string('contact_phone');
             $table->enum('league', ['women', 'co-ed']);
-            $table->string('tier');
+            $table->integer('tier');
+            $table->integer('rank');
             $table->timestamps();
         });
     }

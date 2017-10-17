@@ -6,6 +6,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\team;
 
 class RegisterController extends Controller
 {
@@ -38,6 +39,17 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
+
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+     public function showRegistrationForm()
+     {
+        $teams = team::all();
+        return view('auth.register', ['teams' => $teams]);
+     }
 
     /**
      * Get a validator for an incoming registration request.

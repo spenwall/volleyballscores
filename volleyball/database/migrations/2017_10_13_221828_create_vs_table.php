@@ -18,7 +18,7 @@ class CreateVsTable extends Migration
             $table->integer('game');
             $table->integer('team1');
             $table->integer('team2');
-            $table->integer('winner');
+            $table->integer('winner')->default(0);
             $table->timestamps();
         });
     }
