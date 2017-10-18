@@ -19,18 +19,29 @@
                     @foreach($games as $game)
                     <form id="game{{$game['id']}}" method="post" action="/home">
                     {{ csrf_field() }}
-                        <div class="game-date">
-                            {{$game['date']}}
+                    <div class="full">
+                        <div class="col-md-4">
+                            <div class="game-date">
+                                {{$game['date']}}
+                            </div>
                         </div>
-                        <div class="btn-group">
-                            <input type="hidden" name="game" value="{{$game['id']}}" />
-                            <input type="radio" name="winner" value="{{$game['team1']}}" {{ $game['winner'] == $game['team1'] ? "checked='checked'" : ""}}>{{$game['team1_rank']}} {{$game['team1_name']}}<br />
-                            vs</br>
-                            <input type="radio" name="winner" value="{{$game['team2']}}" {{ $game['winner'] == $game['team2'] ? "checked='checked'" : ""}}>{{$game['team2_rank']}} {{$game['team2_name']}}<br />
+                        <div class="col-md-4">
+                            <div class="btn-group">
+                                <input type="hidden" name="game" value="{{$game['id']}}" />
+                                <input type="radio" name="winner" value="{{$game['team1']}}" {{ $game['winner'] == $game['team1'] ? "checked='checked'" : ""}}> {{$game['team1_rank']}} {{$game['team1_name']}}<br />
+                                <input type="radio" name="winner" value="{{$game['team2']}}" {{ $game['winner'] == $game['team2'] ? "checked='checked'" : ""}}> {{$game['team2_rank']}} {{$game['team2_name']}}<br />
+                                <input type="radio" name="winner" value="0"> Tie
+                            </div>
                         </div>
-                        </br>
-                        <input type="submit" value="Submit"><div class="score-recorded">{{ $gameUpdated == $game['id'] ? 'Success' : ''}}</div>
-                        </form>
+                        <div class="col-md-4">
+                            <input type="submit" value="Submit"><div class="score-recorded">{{ isset($gameUpdated) && ($gameUpdated == $game['id']) ? 'Success' : ''}}</div>
+                        </div>
+                        <div class="col-md-12">
+                            <hr>
+                        </div>
+                    </div>
+                    </form>
+                    
                     @endforeach
 
                 </div>
