@@ -49,7 +49,8 @@ class HomeController extends Controller
         $team = $user->team;
         $teamObject = team::find($team->id);
         $games = $teamObject->games();
-        $data = array('name' => $name, 'team' => $team, 'games' => $games);
+        $round = \App\rounds::currentRound();
+        $data = array('name' => $name, 'team' => $team, 'games' => $games, 'round' => $round);
         return $data;
     }
 }

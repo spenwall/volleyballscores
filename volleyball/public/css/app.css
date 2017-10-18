@@ -8362,8 +8362,16 @@ button.close {
   font-weight: 700;
 }
 
-.full {
+.game {
   width: 100%;
   float: left;
+}
+
+.games {
+  margin-top: 10px;
+}
+
+.round {
+  margin-top: 10px;
 }
 

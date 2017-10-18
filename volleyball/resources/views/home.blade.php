@@ -5,8 +5,14 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">{{$team->team_name}}</div>
-
+                <div class="panel-heading">
+                    <div class="team h3">
+                        {{$team->team_name}}
+                    </div>
+                    <div class="round h4">
+                       Round {{$round}}
+                    </div>
+                </div>
                 <div class="panel-body">
                     @if (session('status'))
                         <div class="alert alert-success">
@@ -14,12 +20,12 @@
                         </div>
                     @endif
 
-                    Welcome please select the winner of the game and hit submit.
+                    Please select the winner of the game and hit submit to record your scores.
 
                     @foreach($games as $game)
                     <form id="game{{$game['id']}}" method="post" action="/home">
                     {{ csrf_field() }}
-                    <div class="full">
+                    <div class="games">
                         <div class="col-md-4">
                             <div class="game-date">
                                 {{$game['date']}}
@@ -30,11 +36,11 @@
                                 <input type="hidden" name="game" value="{{$game['id']}}" />
                                 <input type="radio" name="winner" value="{{$game['team1']}}" {{ $game['winner'] == $game['team1'] ? "checked='checked'" : ""}}> {{$game['team1_rank']}} {{$game['team1_name']}}<br />
                                 <input type="radio" name="winner" value="{{$game['team2']}}" {{ $game['winner'] == $game['team2'] ? "checked='checked'" : ""}}> {{$game['team2_rank']}} {{$game['team2_name']}}<br />
-                                <input type="radio" name="winner" value="0"> Tie
+                                <input type="radio" name="winner" value="0" {{ $game['winner'] == 0 ? "checked='checked'" : "" }}> Tie
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <input type="submit" value="Submit"><div class="score-recorded">{{ isset($gameUpdated) && ($gameUpdated == $game['id']) ? 'Success' : ''}}</div>
+                            <input type="submit" value="Submit" class="btn btn-primary"><div class="score-recorded">{{ isset($gameUpdated) && ($gameUpdated == $game['id']) ? 'Success' : ''}}</div>
                         </div>
                         <div class="col-md-12">
                             <hr>
