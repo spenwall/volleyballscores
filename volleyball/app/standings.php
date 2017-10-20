@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class vs extends Model
+class standings extends Model
 {
     //
 }

@@ -15,4 +15,12 @@ class rounds extends Model
                         ->first();
         return $rounds->round;
     }
+
+    public static function roundsToDate()
+    {
+        $current = carbon::now();
+        $rounds = self::select('round')->where('start', '<', $current)->get();
+        
+        return $rounds;
+    }
 }

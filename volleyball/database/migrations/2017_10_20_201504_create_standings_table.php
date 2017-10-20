@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVsTable extends Migration
+class CreateStandingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateVsTable extends Migration
      */
     public function up()
     {
-        Schema::create('vs', function (Blueprint $table) {
+        Schema::create('standings', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('game');
-            $table->integer('team1');
-            $table->integer('team2');
-            $table->integer('winner')->default(0);
+            $table->enum('league', ['womens', 'co-ed']);
+            $table->integer('rounds_id');
+            $table->integer('rank');
+            $table->integer('teams_id');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateVsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vs');
+        Schema::dropIfExists('standings');
     }
 }
