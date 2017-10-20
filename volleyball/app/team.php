@@ -8,6 +8,16 @@ use \App\rounds;
 
 class team extends Model
 {
+
+    CONST COL_ID = 'id';
+    CONST COL_TEAM_NAME = 'team_name';
+    CONST COL_CONTACT_NAME = 'contact_name';
+    CONST COL_CONTACT_EMAIL = 'contact_email';
+    CONST COL_CONTACT_PHONE = 'contact_phone';
+    CONST COL_LEAGUE = 'league';
+    CONST COL_TIER = 'tier';
+    CONST COL_RANK = 'rank';
+
     public function games()
     {
         $games = games::where('team1', $this->rank)
@@ -18,8 +28,8 @@ class team extends Model
                     ->get();
         $completeGames = array();
         foreach ($games as $game) {
-            $team1 = $this->where('rank', $game->team1)->where('tier', $this->tier)->where('league', $this->league)->first();
-            $team2 = $this->where('rank', $game->team2)->where('tier', $this->tier)->where('league', $this->league)->first();
+            $team1 = $this->where(self::COL_RANK, $game->team1)->where(self::COL_TIER, $this->tier)->where(self::COL_LEAGUE, $this->league)->first();
+            $team2 = $this->where(self::COL_RANK, $game->team2)->where(self::COL_TIER, $this->tier)->where(self::COL_LEAGUE, $this->league)->first();
             $date = new DateTime($game->date);
             $date = $date->format('F j, Y');
             $completeGames[] = array('id' => $game->id,
@@ -33,5 +43,22 @@ class team extends Model
                                     'winner' => $game->winner);
         }
         return $completeGames;
+    }
+
+    /**
+     * Returns all the teams that match the team and league that is passed in
+     * 
+     * @param int $id - the id of the team
+     * 
+     * @return collection of the teams
+     */
+    public function allLeagueTierTeams()
+    {
+        $allTeams = $this->where($this::COL_TIER, $this->tier)
+                         ->where($this::COL_LEAGUE, $this->league)
+                         ->orderBy($this::COL_RANK)
+                         ->get();
+        return $allTeams;
+
     }
 }
