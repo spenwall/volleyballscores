@@ -61,4 +61,16 @@ class team extends Model
         return $allTeams;
 
     }
+
+    public function leagueTiers()
+    {
+        $tiers = $this->select($this::COL_TIER)->where($this::COL_LEAGUE, $this->league)->get()->unique();
+        return $tiers;
+    }
+
+    public function teamsInTier($tier)
+    {
+        $teams = $this->where($this::COL_LEAGUE, $this->league)->where($this::COL_TIER, $tier);
+        return $teams;
+    }
 }

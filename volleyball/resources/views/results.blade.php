@@ -14,19 +14,12 @@
                             <tr>
                                 <th>Rank</th>
                                 <th>Names</th>
-                                @foreach ($teamNames as $rank => $teamName)
+                                @foreach ($gamesByTier as $tier => $games)
+                                <?php dd($tier); ?>
                                     <th>{{$rank}}</th>
                                 @endforeach
                             </tr>
                         </thead>
-                        <tbody>
-                        @foreach ($teamNames as $rank => $teamName)
-                            <tr>
-                                <td>{{$rank}}</td>
-                                <td>{{$teamName}}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
                     </table>
                 </div>
             </div>

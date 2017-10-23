@@ -17,4 +17,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/home', 'HomeController@scores')->name('home');
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('results', 'ResultsController@index')->name('results');
+Route::get('results/{round}', 'ResultsController@index')->name('results');

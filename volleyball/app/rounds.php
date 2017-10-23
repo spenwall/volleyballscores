@@ -20,7 +20,23 @@ class rounds extends Model
     {
         $current = carbon::now();
         $rounds = self::select('round')->where('start', '<', $current)->get();
-        
         return $rounds;
+    }
+
+    public function games()
+    {
+        return $this->hasmany(games::class);
+    }
+
+    public function gamesByLeague($league)
+    {
+        $games = $this->games()->get();
+        return $games->where('league', $league);
+    }
+
+    public function gamesByLeagueTier($league, $tier)
+    {
+        $games = $this->games()->get();
+        return $games->where('league', $league)->where('tier', $tier);
     }
 }

@@ -48,20 +48,21 @@
                         @else
                             <li><a href="{{ route('home') }}">Record Scores</a></li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" date-toggle="dropdown" role="button" aria-expanded="false">
-                                    Results
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                @foreach (\App\rounds::roundsToDate() as $round)
-                                    <li>
-                                        <a href="{{ route('results') }}">
-                                        Round {{$round->round}}
-                                        </a>
-                                    </li>
-                                @endforeach
-                                </ul>
-                            </li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Results <span class="caret"></span>
+                            </a>
+                            
+                            <ul class="dropdown-menu" role="menu">
+                            @foreach (\App\rounds::roundsToDate() as $round)
+                                <li>
+                                    <a href="{{ route('results', ['round' => $round->round]) }}">
+                                        Round {{ $round->round }}
+                                    </a>
+                                </li>
+                            @endforeach
+                            </ul>
+                           
+                        </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
