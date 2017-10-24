@@ -21,6 +21,7 @@ class CreateGamesTable extends Migration
             $table->integer('winner');
             $table->dateTime('date');
             $table->integer('rounds_id');
+            $table->integer('tier');
             $table->string('location');
             $table->string('court');
             $table->enum('league', ['women', 'co-ed']);

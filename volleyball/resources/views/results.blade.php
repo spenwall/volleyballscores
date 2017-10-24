@@ -15,7 +15,7 @@
                                 <th>Rank</th>
                                 <th>Names</th>
                                 @foreach ($gamesByTier as $tier => $games)
-                                <?php dd($tier); ?>
+                                <?php dd($games); ?>
                                     <th>{{$rank}}</th>
                                 @endforeach
                             </tr>

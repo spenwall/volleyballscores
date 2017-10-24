@@ -24,7 +24,7 @@ class team extends Model
                     ->orWhere('team2', $this->rank)
                     ->where('league', $this->league)
                     ->where('tier', $this->tier)
-                    ->where('round', rounds::currentRound())
+                    ->where('rounds_id', rounds::currentRound())
                     ->get();
         $completeGames = array();
         foreach ($games as $game) {
@@ -34,9 +34,11 @@ class team extends Model
             $date = $date->format('F j, Y');
             $completeGames[] = array('id' => $game->id,
                                     'team1' => $game->team1,
+                                    'team1_id' => $team1->id,
                                     'team1_name' => $team1->team_name,
                                     'team1_rank' => $team1->rank,
                                     'team2' => $game->team2,
+                                    'team2_id' => $team2->id,
                                     'team2_name' => $team2->team_name,
                                     'team2_rank' => $team2->rank,
                                     'date' => $date,

@@ -22,6 +22,7 @@ class CreateRoundResultsTable extends Migration
             $table->integer('wins');
             $table->integer('loses');
             $table->integer('ties');
+            $table->integer('final_standing');
             $table->timestamps();
         });
     }
