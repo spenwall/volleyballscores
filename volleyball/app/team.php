@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use \Datetime;
 use \App\rounds;
+use \App\roundResults;
 
 class team extends Model
 {
@@ -72,7 +73,18 @@ class team extends Model
 
     public function teamsInTier($tier)
     {
-        $teams = $this->where($this::COL_LEAGUE, $this->league)->where($this::COL_TIER, $tier);
+        $teams = $this->where($this::COL_LEAGUE, $this->league)->where($this::COL_TIER, $tier)->get();
+        return $teams;
+    }
+
+    public function teamsForRoundAndTier($round, $tier)
+    {
+        $teams = roundResults::where('round_id', $round)
+                                ->where('round_results.tier', $tier)
+                                ->where('league', $this->league)
+                                ->join('teams', 'teams.id', '=', 'round_results.team_id')
+                                ->orderBy('round_results.rank')
+                                ->get();
         return $teams;
     }
 }

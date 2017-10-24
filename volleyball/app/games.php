@@ -6,12 +6,30 @@ use Illuminate\Database\Eloquent\Model;
 
 class games extends Model
 {
-    public static function gamesInTier($tier, $league)
+    public static function gamesInTierRound($tier, $round, $league)
     {
-        $where = ['tier' => $tier, 'league' => $league];
+        $where = ['tier' => $tier, 'round_id' => $round, 'league' => $league];
         $games = self::where($where)->get();
        
-        $team1Games = $games->where('team1', 1);
-        dd($team1Games);
+        return $games;
+    }
+
+    public static function winner($team1, $team2, $round, $tier)
+    {
+        $league = $team1->league;
+        $where = ['tier' => $tier, 'rounds_id' => $round, 'league' => $league];
+        $winner = self::where($where)->whereIn('team1', [$team1->rank, $team2->rank])
+                                     ->whereIn('team2', [$team1->rank, $team2->rank])
+                                     ->first();
+        if (is_null($winner)) {
+            return '-';
+        } elseif ($winner->winner == $team1->rank) {
+            return 'W';
+        } elseif ($winner->winner == $team2->rank) {
+            return 'L';
+        } elseif ($winner->winner == 0) {
+            return 'T';
+        }
+        return $winner->winner;
     }
 }

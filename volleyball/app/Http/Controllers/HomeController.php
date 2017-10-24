@@ -34,9 +34,11 @@ class HomeController extends Controller
     {
         $game = request('game');
         $winner = request('winner');
+        
         $gameRow = games::find($game);
         $gameRow->winner = $winner;
         $gameRow->save();
+        
         $data = $this->_data();
         $data['gameUpdated'] = $game;
         return view('home', $data);
@@ -47,8 +49,7 @@ class HomeController extends Controller
         $user = Auth::user();
         $name = $user->name;
         $team = $user->team;
-        $teamObject = team::find($team->id);
-        $games = $teamObject->games();
+        $games = $team->games();
         $round = \App\rounds::currentRound();
         $data = array('name' => $name, 'team' => $team, 'games' => $games, 'round' => $round);
         return $data;
