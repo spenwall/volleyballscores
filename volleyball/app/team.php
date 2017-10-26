@@ -21,11 +21,13 @@ class team extends Model
 
     public function games()
     {
-        $games = games::where('team1', $this->rank)
-                    ->orWhere('team2', $this->rank)
-                    ->where('league', $this->league)
+        $games = games::where('league', $this->league)
                     ->where('tier', $this->tier)
                     ->where('rounds_id', rounds::currentRound())
+                    ->where(function ($query) {
+                        $query->where('team1', $this->rank)
+                              ->orWhere('team2', $this->rank);
+                    })
                     ->get();
         $completeGames = array();
         foreach ($games as $game) {
@@ -79,7 +81,8 @@ class team extends Model
 
     public function teamsForRoundAndTier($round, $tier)
     {
-        $teams = roundResults::where('round_id', $round)
+        $teams = roundResults::select('round_results.rank', 'team_name', 'league')
+                                ->where('round_id', $round)
                                 ->where('round_results.tier', $tier)
                                 ->where('league', $this->league)
                                 ->join('teams', 'teams.id', '=', 'round_results.team_id')

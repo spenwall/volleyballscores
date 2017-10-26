@@ -35,7 +35,7 @@
                             <div class="btn-group">
                                 <input type="hidden" name="game" value="{{$game['id']}}" />
                                 <input type="radio" name="winner" value="{{$game['team1_rank']}}" {{ $game['winner'] == $game['team1_rank'] ? "checked='checked'" : ""}}> {{$game['team1_rank']}} {{$game['team1_name']}}<br />
-                                <input type="radio" name="winner" value="{{$game['team2_rank']}}" {{ $game['winner'] == $game['team1_rank'] ? "checked='checked'" : ""}}> {{$game['team2_rank']}} {{$game['team2_name']}}<br />
+                                <input type="radio" name="winner" value="{{$game['team2_rank']}}" {{ $game['winner'] == $game['team2_rank'] ? "checked='checked'" : ""}}> {{$game['team2_rank']}} {{$game['team2_name']}}<br />
                                 <input type="radio" name="winner" value="0" {{ $game['winner'] == 0 ? "checked='checked'" : "" }}> Tie
                             </div>
                         </div>

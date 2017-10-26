@@ -2,6 +2,7 @@
 
 @section('content')
 
+    @if ($resultsByTier)
     @foreach ($resultsByTier as $tier => $results)
     <div class="container">
     <div class="row">
@@ -19,6 +20,10 @@
                                 @foreach ($teamsByTiers[$tier] as $teamByRound)
                                 <th>{{ $teamByRound->rank }}</th>
                                 @endforeach
+                                <th>Wins</th>
+                                <th>loses</th>
+                                <th>Ties</th>
+                                <th>Ending Rank</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -29,6 +34,10 @@
                                     @foreach ($teamsByTiers[$tier] as $opponent)
                                     <td>{{ $results[$team->rank][$opponent->rank] }}
                                     @endforeach
+                                    <td>wins</td>
+                                    <td>Loses</td>
+                                    <td>Ties</td>
+                                    <td>Rank</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -39,4 +48,17 @@
     </div>
     </div>
     @endforeach
+    @else
+    <div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                No Results
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    @endif
 @endsection

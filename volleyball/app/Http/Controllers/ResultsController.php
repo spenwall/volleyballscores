@@ -79,7 +79,11 @@ class ResultsController extends Controller
                 }
             }
         }
-        return $results;
+        if (isset($results)) {
+            return $results;
+        } else {
+            return false;
+        }
     }
 
     private function _winner($t1, $t2, $tier)
