@@ -42,27 +42,51 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Co-ed <span class="caret"></span>
+                            </a>
+                            
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="{{ route('teams', ['league' => 'co-ed']) }}">
+                                        Teams
+                                    </a>
+                                </li>
+                            @foreach (\App\rounds::roundsToDate() as $round)
+                                <li>
+                                    <a href="{{ route('results', ['league' => 'co-ed','round' => $round->round]) }}">
+                                        Round {{ $round->round }} Results
+                                    </a>
+                                </li>
+                            @endforeach
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Ladies <span class="caret"></span>
+                            </a>
+                            
+                            <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="{{ route('teams', ['league' => 'womens']) }}">
+                                    Teams
+                                </a>
+                            </li>
+                            @foreach (\App\rounds::roundsToDate() as $round)
+                                <li>
+                                    <a href="{{ route('results', ['league' => 'ladies','round' => $round->round]) }}">
+                                        Round {{ $round->round }} Results
+                                    </a>
+                                </li>
+                            @endforeach
+                            </ul>
+                        </li>
                         @guest
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
                             <li><a href="{{ route('home') }}">Record Scores</a></li>
-                            <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                Results <span class="caret"></span>
-                            </a>
-                            
-                            <ul class="dropdown-menu" role="menu">
-                            @foreach (\App\rounds::roundsToDate() as $round)
-                                <li>
-                                    <a href="{{ route('results', ['round' => $round->round]) }}">
-                                        Round {{ $round->round }}
-                                    </a>
-                                </li>
-                            @endforeach
-                            </ul>
-                           
-                        </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>

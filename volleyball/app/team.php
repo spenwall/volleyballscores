@@ -57,7 +57,7 @@ class team extends Model
      * 
      * @return collection of the teams
      */
-    public function allLeagueTierTeams()
+    public function allLeagueTierTeams($league)
     {
         $allTeams = $this->where($this::COL_TIER, $this->tier)
                          ->where($this::COL_LEAGUE, $this->league)
@@ -67,9 +67,9 @@ class team extends Model
 
     }
 
-    public function leagueTiers()
+    public static function leagueTiers($league)
     {
-        $tiers = $this->select($this::COL_TIER)->where($this::COL_LEAGUE, $this->league)->get()->unique();
+        $tiers = self::select(self::COL_TIER)->where(self::COL_LEAGUE, $league)->groupBy(self::COL_TIER)->get();
         return $tiers;
     }
 
@@ -79,15 +79,31 @@ class team extends Model
         return $teams;
     }
 
-    public function teamsForRoundAndTier($round, $tier)
+    public static function teamsForRoundAndTier($round, $tier, $league)
     {
-        $teams = roundResults::select('round_results.rank', 'team_name', 'league')
+        $teams = roundResults::select('teams.id', 'round_results.rank', 'team_name', 'contact_name', 'contact_phone', 'contact_email', 'league')
                                 ->where('round_id', $round)
                                 ->where('round_results.tier', $tier)
-                                ->where('league', $this->league)
+                                ->where('league', $league)
                                 ->join('teams', 'teams.id', '=', 'round_results.team_id')
                                 ->orderBy('round_results.rank')
                                 ->get();
         return $teams;
+    }
+
+    public static function currentTeamsByTiers($league)
+    {
+        return self::teamsByTiers($league, rounds::currentRound());
+    }
+
+    public static function teamsByTiers($league, $round)
+    {
+        $tiersInLeague = self::leagueTiers($league);
+        $teamsInTiers = array();
+        foreach ($tiersInLeague as $tier)
+        {
+            $teamsInTiers[$tier->tier] = team::teamsForRoundAndTier($round, $tier->tier, $league);
+        }
+        return $teamsInTiers;
     }
 }

@@ -11,8 +11,7 @@ use App\rounds;
 class ResultsController extends Controller
 {
     private $_round;
-
-    private $_team;
+    private $_league;
     /**
      * Create a new controller instance.
      *
@@ -20,7 +19,7 @@ class ResultsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     /**
@@ -28,23 +27,21 @@ class ResultsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($round)
+    public function index($league, $round)
     {
         $this->_round = $round;
-        $user = Auth::user();
-        $name = $user->name;
-        $this->_team = $user->team;
+        $this->_league = $league;
         $gamesByTier = $this->_gamesByTier();
         $resultsByTier = $this->_resultsByTier();
-        $teamsByTiers = $this->_teamsByTiers();
+        $teamsByTiers = team::teamsByTiers($league, $round);
         $data = array('resultsByTier' => $resultsByTier, 'teamsByTiers' => $teamsByTiers);
         return view('results', $data);
     }
 
     private function _gamesByTier()
     {
-        $league = $this->_team->league;
-        $tiers = $this->_team->leagueTiers();
+        $league = $this->_league;
+        $tiers = team::leagueTiers($this->_league);
         $roundCollection = rounds::find($this->_round);
         $gamesByTier = array();
         foreach ($tiers as $tier) {
@@ -56,18 +53,18 @@ class ResultsController extends Controller
 
     private function _teamsByTiers()
     {
-        $tiersInLeague = $this->_team->leagueTiers();
+        $tiersInLeague = team::leagueTiers($this->_league);
         $teamsInTiers = array();
         foreach ($tiersInLeague as $tier)
         {
-            $teamsInTiers[$tier->tier] = $this->_team->teamsForRoundAndTier($this->_round, $tier->tier);
+            $teamsInTiers[$tier->tier] = team::teamsForRoundAndTier($this->_round, $tier->tier, $this->_league);
         }
         return $teamsInTiers;
     }
 
     private function _resultsByTier()
     {
-        $teamsByTiers = $this->_teamsByTiers();
+        $teamsByTiers = team::teamsByTiers($this->_league, $this->_round);
         foreach($teamsByTiers as $tier => $teams){
             foreach ($teams as $team1) {
                 foreach ($teams as $team2) {
