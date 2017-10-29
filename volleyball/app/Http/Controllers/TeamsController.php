@@ -12,4 +12,10 @@ class TeamsController extends Controller
         $data['teamsByTier'] = team::currentTeamsByTiers($league);
         return view('teams', $data);
     }
+
+    public function team($id)
+    {
+        $team = team::find($id);
+        return view('team', ['team' => $team]);
+    }
 }
