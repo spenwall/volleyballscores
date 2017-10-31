@@ -10,4 +10,11 @@ class roundResults extends Model
     {
         return $this->belongsTo('team');
     }
+
+    public static function rankForRound($team_id, $round)
+    {
+        $rank = self::select('rank')->where('team_id', $team_id)->where('round_id', $round)->first();
+        
+        return $rank;
+    }
 }

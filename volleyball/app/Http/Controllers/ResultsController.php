@@ -47,7 +47,6 @@ class ResultsController extends Controller
         foreach ($tiers as $tier) {
             $gamesByTier[$tier->tier] = $roundCollection->gamesByLeagueTier($league, $tier->tier);
         }
-
         return $gamesByTier;
     }
 
@@ -59,6 +58,7 @@ class ResultsController extends Controller
         {
             $teamsInTiers[$tier->tier] = team::teamsForRoundAndTier($this->_round, $tier->tier, $this->_league);
         }
+        
         return $teamsInTiers;
     }
 
