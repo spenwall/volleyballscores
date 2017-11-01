@@ -9,7 +9,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="h3">
-                        Tier {{ $tier }} Teams
+                        Tier {{ $tier }}
                     </div>
                 </div>
                 <div class="panel-body">

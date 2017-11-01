@@ -36,16 +36,16 @@ class games extends Model
 
     public static function totalWins($team, $round)
     {
-        $roundrank = roundResults::rankForRound($team->id, $round);
-        $wins = $games = games::where('league', $team->league)
+        $roundrank = roundResults::rankForRound($team->id, $round)->rank;
+        $wins = games::where('league', $team->league)
         ->where('tier', $team->tier)
         ->where('rounds_id', $round)
-        ->where('winner', $team->rank)
-        ->where(function ($query) {
-            $query->where('team1', 8)
-                  ->orWhere('team2', 8);
-        })->count();
-        
+        ->where('winner', $roundrank)
+        ->where(function ($query) use ($roundrank) {
+            $query->where('team1', $roundrank)
+                  ->orWhere('team2', $roundrank);
+        })->get();
+        dd($wins);
         return $wins;
     }
 }
