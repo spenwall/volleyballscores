@@ -32,8 +32,6 @@ class games extends Model
         }
         return $winner->winner;
     }
-<<<<<<< HEAD
-=======
 
     public static function totalWins($team, $round)
     {
@@ -49,5 +47,4 @@ class games extends Model
         dd($wins);
         return $wins;
     }
->>>>>>> 520a90d1fed35c92114f5f3319cdfd0ae1f9bc79
 }
