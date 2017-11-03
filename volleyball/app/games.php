@@ -32,4 +32,22 @@ class games extends Model
         }
         return $winner->winner;
     }
+<<<<<<< HEAD
+=======
+
+    public static function totalWins($team, $round)
+    {
+        $roundrank = roundResults::rankForRound($team->id, $round)->rank;
+        $wins = games::where('league', $team->league)
+        ->where('tier', $team->tier)
+        ->where('rounds_id', $round)
+        ->where('winner', $roundrank)
+        ->where(function ($query) use ($roundrank) {
+            $query->where('team1', $roundrank)
+                  ->orWhere('team2', $roundrank);
+        })->get();
+        dd($wins);
+        return $wins;
+    }
+>>>>>>> 520a90d1fed35c92114f5f3319cdfd0ae1f9bc79
 }
