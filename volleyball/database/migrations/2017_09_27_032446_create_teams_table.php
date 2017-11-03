@@ -19,7 +19,7 @@ class CreateTeamsTable extends Migration
             $table->string('contact_name');
             $table->string('contact_email');
             $table->string('contact_phone');
-            $table->enum('league', ['women', 'co-ed']);
+            $table->enum('league', ['ladies', 'co-ed']);
             $table->integer('tier');
             $table->integer('rank');
             $table->timestamps();

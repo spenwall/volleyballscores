@@ -69,7 +69,7 @@
                             
                             <ul class="dropdown-menu" role="menu">
                             <li>
-                                <a href="{{ route('teams', ['league' => 'womens']) }}">
+                                <a href="{{ route('teams', ['league' => 'ladiess']) }}">
                                     Teams
                                 </a>
                             </li>

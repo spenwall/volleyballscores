@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\roundResults;
 
 class games extends Model
 {
@@ -32,20 +31,5 @@ class games extends Model
             return 'T';
         }
         return $winner->winner;
-    }
-
-    public static function totalWins($team, $round)
-    {
-        $roundrank = roundResults::rankForRound($team->id, $round);
-        $wins = $games = games::where('league', $team->league)
-        ->where('tier', $team->tier)
-        ->where('rounds_id', $round)
-        ->where('winner', $team->rank)
-        ->where(function ($query) {
-            $query->where('team1', 8)
-                  ->orWhere('team2', 8);
-        })->count();
-        
-        return $wins;
     }
 }
