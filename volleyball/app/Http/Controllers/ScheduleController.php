@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\team;
 
 class ScheduleController extends Controller
 {
-    public function index($leauge)
+    public function index($league)
     {
-        return view('schedule');
+        $tiers = team::leagueTiers($league);
+        return view('schedule', ['tiers' => $tiers]);
     }
 }
