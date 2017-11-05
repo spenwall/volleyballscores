@@ -74,8 +74,13 @@
                             
                             <ul class="dropdown-menu" role="menu">
                             <li>
-                                <a href="{{ route('teams', ['league' => 'ladiess']) }}">
+                                <a href="{{ route('teams', ['league' => 'ladies']) }}">
                                     Teams
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('teams', ['league' => 'ladies']) }}">
+                                    Schedule
                                 </a>
                             </li>
                             @foreach (\App\rounds::roundsToDate() as $round)
