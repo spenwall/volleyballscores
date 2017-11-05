@@ -53,6 +53,11 @@
                                         Teams
                                     </a>
                                 </li>
+                                <li>
+                                    <a href="{{ route('schedule', ['league' => 'co-ed']) }}">
+                                        Schedule
+                                    </a>
+                                </li>
                             @foreach (\App\rounds::roundsToDate() as $round)
                                 <li>
                                     <a href="{{ route('results', ['league' => 'co-ed','round' => $round->round]) }}">
