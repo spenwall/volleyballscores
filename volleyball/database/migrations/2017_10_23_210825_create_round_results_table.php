@@ -18,6 +18,7 @@ class CreateRoundResultsTable extends Migration
             $table->integer('round_id');
             $table->integer('team_id');
             $table->integer('rank');
+            $table->enum('league', ['ladies', 'co-ed']);
             $table->integer('tier');
             $table->integer('wins');
             $table->integer('loses');

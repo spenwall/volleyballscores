@@ -25,7 +25,17 @@ class rounds extends Model
 
     public function games()
     {
-        return $this->hasmany(games::class);
+        return $this->hasMany(games::class);
+    }
+
+    public function roundResults()
+    {
+        return $this->hasMany(roundResults::class);
+    }
+
+    public function coedResults()
+    {
+        return $this->roundResults()->where('tier', 1)->get();
     }
 
     public function gamesByLeague($league)

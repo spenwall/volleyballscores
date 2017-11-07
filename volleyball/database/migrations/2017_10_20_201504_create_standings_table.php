@@ -15,7 +15,7 @@ class CreateStandingsTable extends Migration
     {
         Schema::create('standings', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('league', ['womens', 'co-ed']);
+            $table->enum('league', ['ladies', 'co-ed']);
             $table->integer('rounds_id');
             $table->integer('rank');
             $table->integer('teams_id');

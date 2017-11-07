@@ -29,38 +29,27 @@ class ResultsController extends Controller
      */
     public function index($league, $round)
     {
+        $roundResults = rounds::find(2)->coedResults();
+        dd($roundResults);
         $this->_round = $round;
         $this->_league = $league;
-        $gamesByTier = $this->_gamesByTier();
         $resultsByTier = $this->_resultsByTier();
+        $teamResults = $this->_teamsResults();
         $teamsByTiers = team::teamsByTiers($league, $round);
-        $data = array('resultsByTier' => $resultsByTier, 'teamsByTiers' => $teamsByTiers);
+        $data = array('resultsByTier' => $resultsByTier, 'teamsByTiers' => $teamResults);
         return view('results', $data);
     }
 
-    private function _gamesByTier()
-    {
-        $league = $this->_league;
-        $tiers = team::leagueTiers($this->_league);
-        $roundCollection = rounds::find($this->_round);
-        $gamesByTier = array();
-        foreach ($tiers as $tier) {
-            $gamesByTier[$tier->tier] = $roundCollection->gamesByLeagueTier($league, $tier->tier);
-        }
-        return $gamesByTier;
-    }
-
-    private function _teamsByTiers()
-    {
-        $tiersInLeague = team::leagueTiers($this->_league);
-        $teamsInTiers = array();
-        foreach ($tiersInLeague as $tier)
-        {
-            $teamsInTiers[$tier->tier] = team::teamsForRoundAndTier($this->_round, $tier->tier, $this->_league);
-        }
-        
-        return $teamsInTiers;
-    }
+    // private function _teamsByTiers()
+    // {
+    //     $tiersInLeague = team::leagueTiers($this->_league);
+    //     $teamsInTiers = array();
+    //     foreach ($tiersInLeague as $tier)
+    //     {
+    //         $teamsInTiers[$tier->tier] = team::teamsForRoundAndTier($this->_round, $tier->tier, $this->_league);
+    //     }
+    //     return $teamsInTiers;
+    // }
 
     private function _resultsByTier()
     {
@@ -68,11 +57,7 @@ class ResultsController extends Controller
         foreach($teamsByTiers as $tier => $teams){
             foreach ($teams as $team1) {
                 foreach ($teams as $team2) {
-                    if ($team1->rank == $team2->rank) {
-                        $results[$tier][$team1->rank][$team2->rank] = '-';
-                    } else {
-                        $results[$tier][$team1->rank][$team2->rank] = $this->_winner($team1, $team2, $tier);
-                    }
+                    $results[$tier][$team1->rank][$team2->rank] = $this->_winner($team1, $team2, $tier);
                 }
             }
         }
@@ -88,5 +73,16 @@ class ResultsController extends Controller
         $winner = games::winner($t1, $t2, $this->_round, $tier);
 
         return $winner;
+    }
+
+    private function _teamsResults()
+    {
+        $teamsByTier = team::teamsByTiersArray($this->_league, $this->_round);
+        foreach ($teamsByTier as $tier => $teams)
+            foreach($teams as $team_num => $team) {
+                $teamObject = team::find($team['id']);
+                $teamsByTier[$tier][$team_num]['wins'] = games::totalWins($teamObject, $this->_round);
+            }
+        return $teamsByTier;
     }
 }

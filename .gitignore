@@ -5,3 +5,9 @@
 .config/composer/.htaccess
 .local/share/composer/.htaccess
 .sudo_as_admin_successful
+/.npm
+.bash_aliases
+.bash_history
+.gitignore
+/.config
+/.vim

@@ -18,7 +18,7 @@ class CreateAdminsTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('password');
-            $table->enum('league', ['women', 'co-ed']);
+            $table->enum('league', ['ladies', 'co-ed']);
             $table->timestamps();
         });
     }

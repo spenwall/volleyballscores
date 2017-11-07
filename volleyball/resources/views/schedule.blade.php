@@ -21,7 +21,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="team h3">
-                        Tier {{ $tier->tier }} Schedule
+                        Tier {{ $tiers[0]->tier }} Schedule
                     </div>
                 </div>
             </div>
