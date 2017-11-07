@@ -41,10 +41,8 @@ class games extends Model
         ->where('tier', $team->tier)
         ->where('rounds_id', $round)
         ->where('winner', $roundrank)
-        ->where(function ($query) use ($roundrank) {
-            $query->where('team1', $roundrank)
-                  ->orWhere('team2', $roundrank);
-        })->get();
+        ->get()
+        ->count();
         dd($wins);
         return $wins;
     }
