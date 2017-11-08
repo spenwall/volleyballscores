@@ -23,4 +23,21 @@ class roundResults extends Model
         return $rank;
     }
 
+    public function roundWins()
+    {
+        //calculate wins for round/tier/league
+        $round = 2;
+        $tier = 1;
+        $roundResults = $this->where('round_id', $round)
+                            ->get();
+
+        foreach ($roundResults as $roundResult) {
+            $team = team::find($roundResult->team_id);
+            $wins = games::totalWins($team, $round);
+            $roundResult->wins = $wins;
+            $roundResult->save();
+        }
+        dd($roundResults);
+    }
+
 }

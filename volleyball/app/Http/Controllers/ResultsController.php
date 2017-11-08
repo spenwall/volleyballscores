@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\team;
 use App\games;
 use App\rounds;
+use App\roundResults;
 
 class ResultsController extends Controller
 {
@@ -29,8 +30,9 @@ class ResultsController extends Controller
      */
     public function index($league, $round)
     {
-        $roundResults = rounds::find(2)->coedResults();
-        dd($roundResults);
+
+        //$roundResults = new roundResults();
+        //$roundResults->roundWins();
         $this->_round = $round;
         $this->_league = $league;
         $resultsByTier = $this->_resultsByTier();
@@ -39,17 +41,6 @@ class ResultsController extends Controller
         $data = array('resultsByTier' => $resultsByTier, 'teamsByTiers' => $teamResults);
         return view('results', $data);
     }
-
-    // private function _teamsByTiers()
-    // {
-    //     $tiersInLeague = team::leagueTiers($this->_league);
-    //     $teamsInTiers = array();
-    //     foreach ($tiersInLeague as $tier)
-    //     {
-    //         $teamsInTiers[$tier->tier] = team::teamsForRoundAndTier($this->_round, $tier->tier, $this->_league);
-    //     }
-    //     return $teamsInTiers;
-    // }
 
     private function _resultsByTier()
     {
@@ -77,7 +68,7 @@ class ResultsController extends Controller
 
     private function _teamsResults()
     {
-        $teamsByTier = team::teamsByTiersArray($this->_league, $this->_round);
+        $teamsByTier = team::teamsByTiers($this->_league, $this->_round);
         foreach ($teamsByTier as $tier => $teams)
             foreach($teams as $team_num => $team) {
                 $teamObject = team::find($team['id']);

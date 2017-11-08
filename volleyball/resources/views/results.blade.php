@@ -34,7 +34,7 @@
                                     @foreach ($teamsByTiers[$tier] as $opponent)
                                     <td>{{ $results[$team->rank][$opponent->rank] }}
                                     @endforeach
-                                    <td>wins</td>
+                                    <td>{{ $team->wins }}</td>
                                     <td>Loses</td>
                                     <td>Ties</td>
                                     <td>Rank</td>

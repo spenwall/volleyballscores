@@ -86,18 +86,14 @@ class team extends Model
 
     public static function teamsForRoundAndTier($round, $tier, $league)
     {
-        $teams = self::select('teams.id', 'round_results.rank', 'team_name', 'contact_name', 'round_results.tier', 'contact_phone', 'contact_email', 'league')
+        $teams = self::select('teams.id', 'round_results.rank', 'team_name', 'round_results.wins',
+        'contact_name', 'round_results.tier', 'contact_phone', 'contact_email', 'league')
                                 ->where('round_id', $round)
                                 ->where('round_results.tier', $tier)
                                 ->where('league', $league)
                                 ->join('round_results', 'teams.id', '=', 'round_results.team_id')
                                 ->orderBy('round_results.rank')
                                 ->get();
-        foreach ($teams as $team) {
-            $wins = games::totalWins($team, $round);
-            $team->push(['wins' => $wins]);
-        }
-        dd($teams);
         return $teams;
     }
 

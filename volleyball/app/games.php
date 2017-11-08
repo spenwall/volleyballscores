@@ -42,7 +42,7 @@ class games extends Model
         ->where('winner', $roundrank)
         ->get()
         ->count();
-        dd($wins);
+        
         return $wins;
     }
 }
