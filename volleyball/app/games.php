@@ -35,14 +35,49 @@ class games extends Model
 
     public static function totalWins($team, $round)
     {
-        $roundrank = roundResults::rankForRound($team->id, $round)->rank;
+        $roundResults = roundResults::where(['team_id' => $team->id, 'round_id' => $round])->first();
         $wins = games::where('league', $team->league)
-        ->where('tier', $team->tier)
+        ->where('tier', $roundResults->tier)
         ->where('rounds_id', $round)
-        ->where('winner', $roundrank)
+        ->where('winner', $roundResults->rank)
         ->get()
         ->count();
         
         return $wins;
+    }
+
+    public static function totalLoses($team, $round)
+    {
+        $roundResults = roundResults::where(['team_id' => $team->id, 'round_id' => $round])->first();
+        $loses = games::where('league', $team->league)
+        ->where('tier', $roundResults->tier)
+        ->where('rounds_id', $round)
+        ->where('winner', '<>', $roundResults->rank)
+        ->where('winner', '<>', 0)
+        ->where(function ($query) use ($roundResults) {
+            $query->where('team1', $roundResults->rank)
+                  ->orWhere('team2', $roundResults->rank);
+        })
+        ->get()
+        ->count();
+
+        return $loses;
+    }
+
+    public static function totalTies($team, $round)
+    {
+        $roundResults = roundResults::where(['team_id' => $team->id, 'round_id' => $round])->first();
+        $ties = games::where('league', $team->league)
+        ->where('tier', $roundResults->tier)
+        ->where('rounds_id', $round)
+        ->where('winner', 0)
+        ->where(function ($query) use ($roundResults) {
+            $query->where('team1', $roundResults->rank)
+                  ->orWhere('team2', $roundResults->rank);
+        })
+        ->get()
+        ->count();
+
+        return $ties;
     }
 }

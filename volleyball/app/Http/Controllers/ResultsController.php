@@ -31,8 +31,10 @@ class ResultsController extends Controller
     public function index($league, $round)
     {
 
-        //$roundResults = new roundResults();
-        //$roundResults->roundWins();
+        $roundResults = new roundResults();
+        $roundResults->recordWins();
+        $roundResults->recordLoses();
+        $roundResults->recordTies();
         $this->_round = $round;
         $this->_league = $league;
         $resultsByTier = $this->_resultsByTier();
@@ -72,7 +74,6 @@ class ResultsController extends Controller
         foreach ($teamsByTier as $tier => $teams)
             foreach($teams as $team_num => $team) {
                 $teamObject = team::find($team['id']);
-                $teamsByTier[$tier][$team_num]['wins'] = games::totalWins($teamObject, $this->_round);
             }
         return $teamsByTier;
     }
