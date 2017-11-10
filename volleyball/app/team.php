@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use \Datetime;
 use \App\rounds;
 use \App\roundResults;
+use App\games;
 
 class team extends Model
 {
@@ -86,8 +88,9 @@ class team extends Model
 
     public static function teamsForRoundAndTier($round, $tier, $league)
     {
-        $teams = self::select('teams.id', 'round_results.rank', 'team_name', 'round_results.wins', 
-        'round_results.loses', 'round_results.ties', 'contact_name', 'round_results.tier', 'contact_phone', 
+       
+        $teams = self::select('teams.id', 'round_results.rank', 'team_name',
+        'contact_name', 'round_results.tier', 'contact_phone', 
         'contact_email', 'league')
                                 ->where('round_id', $round)
                                 ->where('round_results.tier', $tier)
@@ -95,6 +98,11 @@ class team extends Model
                                 ->join('round_results', 'teams.id', '=', 'round_results.team_id')
                                 ->orderBy('round_results.rank')
                                 ->get();
+        foreach ($teams as $team) {
+            $team->wins = games::totalWins($team, $round);
+            $team->loses = games::totalLoses($team, $round);
+            $team->ties = games::totalTies($team, $round);
+        }
         return $teams;
     }
 

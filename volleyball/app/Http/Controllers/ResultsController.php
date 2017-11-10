@@ -31,10 +31,10 @@ class ResultsController extends Controller
     public function index($league, $round)
     {
 
-        $roundResults = new roundResults();
-        $roundResults->recordWins();
-        $roundResults->recordLoses();
-        $roundResults->recordTies();
+       // $roundResults = new roundResults();
+        //$roundResults->recordWins();
+        //$roundResults->recordLoses();
+        //$roundResults->recordTies();
         $this->_round = $round;
         $this->_league = $league;
         $resultsByTier = $this->_resultsByTier();
