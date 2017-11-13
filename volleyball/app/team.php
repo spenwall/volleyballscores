@@ -30,7 +30,7 @@ class team extends Model
     {
         $games = games::where('league', $this->league)
                     ->where('tier', $this->tier)
-                    ->where('rounds_id', rounds::currentRound())
+                    ->where('round_id', rounds::currentRound())
                     ->where(function ($query) {
                         $query->where('team1', $this->rank)
                               ->orWhere('team2', $this->rank);
@@ -91,10 +91,10 @@ class team extends Model
        
         $teams = self::select('teams.id', 'round_results.rank', 'team_name',
         'contact_name', 'round_results.tier', 'contact_phone', 
-        'contact_email', 'league')
+        'contact_email', 'teams.league', 'round_results.end_rank')
                                 ->where('round_id', $round)
                                 ->where('round_results.tier', $tier)
-                                ->where('league', $league)
+                                ->where('teams.league', $league)
                                 ->join('round_results', 'teams.id', '=', 'round_results.team_id')
                                 ->orderBy('round_results.rank')
                                 ->get();

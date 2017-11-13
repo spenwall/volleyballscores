@@ -3,12 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\team;
 
 class roundResults extends Model
 {
     public function team()
     {
-        return $this->belongsTo('team');
+        return $this->belongsTo(team::Class);
     }
 
     public function round()
@@ -67,9 +68,18 @@ class roundResults extends Model
         }
     }
 
-    public function calculateRank()
+    public static function calculateRank($tier, $round)
     {
-        //
+        $roundResults = self::where('tier', $tier)->where('round_id', $round)
+        ->orderBy('wins', 'DESC')
+        ->orderBy('rank')
+        ->get();
+        $count = 1;
+        foreach ($roundResults as $result) {
+            $result->end_rank = $count;
+            $count++;
+            $result->save();
+        }
     }
 
 }

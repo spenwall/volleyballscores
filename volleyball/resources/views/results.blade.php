@@ -37,7 +37,7 @@
                                     <td>{{ $team->wins }}</td>
                                     <td>{{ $team->loses }}</td>
                                     <td>{{ $team->ties }}</td>
-                                    <td>Rank</td>
+                                    <td>{{ $team->end_rank }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

@@ -17,7 +17,7 @@ class games extends Model
     public static function winner($team1, $team2, $round, $tier)
     {
         $league = $team1->league;
-        $where = ['tier' => $tier, 'rounds_id' => $round, 'league' => $league];
+        $where = ['tier' => $tier, 'round_id' => $round, 'league' => $league];
         $winner = self::where($where)->whereIn('team1', [$team1->rank, $team2->rank])
                                      ->whereIn('team2', [$team1->rank, $team2->rank])
                                      ->first();
@@ -38,7 +38,7 @@ class games extends Model
         $roundResults = roundResults::where(['team_id' => $team->id, 'round_id' => $round])->first();
         $wins = games::where('league', $team->league)
         ->where('tier', $roundResults->tier)
-        ->where('rounds_id', $round)
+        ->where('round_id', $round)
         ->where('winner', $roundResults->rank)
         ->get()
         ->count();
@@ -51,7 +51,7 @@ class games extends Model
         $roundResults = roundResults::where(['team_id' => $team->id, 'round_id' => $round])->first();
         $loses = games::where('league', $team->league)
         ->where('tier', $roundResults->tier)
-        ->where('rounds_id', $round)
+        ->where('round_id', $round)
         ->where('winner', '<>', $roundResults->rank)
         ->where('winner', '<>', 0)
         ->where(function ($query) use ($roundResults) {
@@ -69,7 +69,7 @@ class games extends Model
         $roundResults = roundResults::where(['team_id' => $team->id, 'round_id' => $round])->first();
         $ties = games::where('league', $team->league)
         ->where('tier', $roundResults->tier)
-        ->where('rounds_id', $round)
+        ->where('round_id', $round)
         ->where('winner', 0)
         ->where(function ($query) use ($roundResults) {
             $query->where('team1', $roundResults->rank)
