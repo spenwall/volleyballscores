@@ -82,4 +82,92 @@ class roundResults extends Model
         }
     }
 
+    public function calculateNextRoundResults()
+    {
+        $round = 2;
+        $league = 'co-ed';
+        $roundResults = $this::where('round_id', $round)
+        ->where('league', $league)
+        ->get();
+        foreach ($roundResults as $results) {
+            switch ($results->end_rank) {
+                case 1:
+                case 2:
+                case 3:
+                    $newTier = $results->tier - 1;
+                    break;
+                case 4:
+                case 5:
+                    $newTier = $results->tier;
+                    break;
+                case 6:
+                case 7:
+                case 8:
+                    $newTier = $results->tier + 1;
+                    break;
+            }
+            if ($newTier < 1) {
+                $newTier = 1;
+            } else if ($newTier > team::lowestTier($results->league)) {
+                $newTier = $results->tier;
+            }
+            $newRank = $this->_getNewRank($results->end_rank, $results->tier, $results->league);
+
+            $newResult = new self;
+            $newResult->round_id = 3;
+            $newResult->team_id = $results->team_id;
+            $newResult->rank = $newRank;
+            $newResult->tier = $newTier;
+            $newResult->league = $results->league;
+            $newResult->save();
+        }
+    }
+
+    private function _getNewRank($endRank, $tier, $league)
+    {
+        //if highest tier 1,2,3,4,5 stay the same
+        //if lowest tier 4,5,6,7,8 stay the same
+        switch ($endRank) {
+            case 1:
+                if ($tier == 1) {
+                    return 1;
+                } else {
+                    return 6;
+                }
+            case 2:
+                if ($tier == 1) {
+                    return 2;
+                } else {
+                    return 7;
+                }
+            case 3:
+                if ($tier == 1) {
+                    return 3;
+                } else {
+                    return 8;
+                }
+            case 4:
+                return 4;
+            case 5:
+                return 5;
+            case 6:
+                if ($tier == team::lowestTier($league)) {
+                    return 6;
+                } else {
+                    return 1;
+                }
+            case 7:
+                if ($tier == team::lowestTier($league)) {
+                    return 7;
+                } else {
+                    return 2;
+                }
+            case 8:
+            if ($tier == team::lowestTier($league)) {
+                return 8;
+            } else {
+                return 3;
+            }
+        }
+    }
 }

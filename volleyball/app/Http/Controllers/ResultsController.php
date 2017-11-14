@@ -35,7 +35,8 @@ class ResultsController extends Controller
         $roundResults->recordWins();
         $roundResults->recordLoses();
         $roundResults->recordTies();
-        roundResults::calculateRank(4, 2);
+        $roundResults->calculateNextRoundResults();
+        roundResults::calculateRank(1, 2);
         $this->_round = $round;
         $this->_league = $league;
         $resultsByTier = $this->_resultsByTier();

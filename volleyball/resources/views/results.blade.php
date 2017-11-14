@@ -12,7 +12,7 @@
                 Tier {{ $tier }} Results
                 </div>
                 <div class="panel-body">
-                    <table class="table table-striped table-responsive">
+                    <table class="table table-striped table-responsive8">
                         <thead>
                             <tr>
                                 <th>Rank</th>

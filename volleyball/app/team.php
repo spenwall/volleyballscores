@@ -76,8 +76,16 @@ class team extends Model
 
     public static function leagueTiers($league)
     {
-        $tiers = self::select(self::COL_TIER)->where(self::COL_LEAGUE, $league)->groupBy(self::COL_TIER)->get();
+        $tiers = self::select(self::COL_TIER)->where(self::COL_LEAGUE, $league)
+        ->groupBy(self::COL_TIER)->get();
         return $tiers;
+    }
+
+    public static function lowestTier($league)
+    {
+        $tiers = self::leagueTiers($league);
+        $lowestTier = $tiers->max('tier');
+        return $lowestTier;
     }
 
     public function teamsInTier($tier)
