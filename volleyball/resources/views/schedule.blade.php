@@ -24,6 +24,27 @@
                         Tier {{ $tiers[0]->tier }} Schedule
                     </div>
                 </div>
+                <div class="panel-body">
+                    <table class="table table-bordered table-responsive">
+                            <tr>
+                                <th rowspan="2">Date</th>
+                                @foreach($courts as $location => $allCourts)
+                                <th colspan="2">{{ $location }}</th>
+                                @endforeach
+                            </tr>
+                            <tr>
+                            @foreach($courts as $location => $court)
+                                @foreach ($court as $courtNumber => $games)
+                                    <?php xdebug_break(); ?>
+                                    <td>{{ $courtNumber }}</td>
+                                @endforeach
+                            @endforeach
+                            </tr>
+                            <tr>
+                                
+                            </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

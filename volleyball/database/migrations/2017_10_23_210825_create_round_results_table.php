@@ -20,9 +20,9 @@ class CreateRoundResultsTable extends Migration
             $table->integer('rank');
             $table->enum('league', ['ladies', 'co-ed']);
             $table->integer('tier');
-            $table->integer('wins');
-            $table->integer('loses');
-            $table->integer('ties');
+            $table->integer('wins')->default(0);
+            $table->integer('loses')->default(0);
+            $table->integer('ties')->default(0);
             $table->integer('final_standing');
             $table->timestamps();
         });

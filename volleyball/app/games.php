@@ -9,7 +9,11 @@ class games extends Model
     public static function gamesInTierRound($tier, $round, $league)
     {
         $where = ['tier' => $tier, 'round_id' => $round, 'league' => $league];
-        $games = self::where($where)->get();
+        $games = self::where($where)
+        ->orderBy('date')
+        ->orderBy('location')
+        ->orderBy('court')
+        ->get();
        
         return $games;
     }
