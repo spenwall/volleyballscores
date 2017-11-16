@@ -29,7 +29,7 @@
                             <tr>
                                 <th rowspan="2">Date</th>
                                 @foreach($courts as $location => $allCourts)
-                                <th colspan="2">{{ $location }}</th>
+                                <th colspan="{{ count($allCourts) }}">{{ $location }}</th>
                                 @endforeach
                             </tr>
                             <tr>
