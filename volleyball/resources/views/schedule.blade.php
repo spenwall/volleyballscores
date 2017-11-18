@@ -36,13 +36,23 @@
                             @foreach($courts as $location => $court)
                                 @foreach ($court as $courtNumber => $games)
                                     <?php xdebug_break(); ?>
-                                    <td>{{ $courtNumber }}</td>
+                                    <th>{{ $courtNumber }}</th>
                                 @endforeach
                             @endforeach
                             </tr>
                             <tr>
-                                
+                                <td rowspan="2">Date</td>
+                                <td>Game</td>
+                                <td>game</td>
+                                <td>game</td>
+                                <td>game</td>
                             </tr>
+                            <tr>
+                                <td>game</td>
+                                <td>game</td>
+                                <td>game</td>
+                                <td>game</td>
+                            <tr>
                     </table>
                 </div>
             </div>
