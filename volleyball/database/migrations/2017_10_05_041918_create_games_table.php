@@ -23,7 +23,7 @@ class CreateGamesTable extends Migration
             $table->integer('tier');
             $table->string('location');
             $table->string('court');
-            $table->enum('league', ['ladies', 'co-ed']);
+            $table->integer('league_id');
             $table->timestamps();
 
         });

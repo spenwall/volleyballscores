@@ -7,6 +7,12 @@ use \Carbon\carbon;
 
 class rounds extends Model
 {
+
+    public function league()
+    {
+        return $this->belongsTo(league::class);
+    }
+
     public static function currentRound()
     {
         $current = carbon::now();

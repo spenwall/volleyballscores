@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class games extends Model
 {
+
     public static function gamesInTierRound($tier, $round, $league)
     {
-        $where = ['tier' => $tier, 'round_id' => $round, 'league' => $league];
+        $where = ['tier' => $tier, 'round_id' => $round, 'league_id' => $league];
         $games = self::where($where)
         ->orderBy('date')
         ->orderBy('location')
@@ -20,8 +21,7 @@ class games extends Model
 
     public static function winner($team1, $team2, $round, $tier)
     {
-        $league = $team1->league;
-        $where = ['tier' => $tier, 'round_id' => $round, 'league' => $league];
+        $where = ['tier' => $tier, 'round_id' => $round, 'league_id' => $team1->league->id];
         $winner = self::where($where)->whereIn('team1', [$team1->rank, $team2->rank])
                                      ->whereIn('team2', [$team1->rank, $team2->rank])
                                      ->first();
@@ -40,7 +40,7 @@ class games extends Model
     public static function totalWins($team, $round)
     {
         $roundResults = roundResults::where(['team_id' => $team->id, 'round_id' => $round])->first();
-        $wins = games::where('league', $team->league)
+        $wins = games::where('league_id', $team->league->id)
         ->where('tier', $roundResults->tier)
         ->where('round_id', $round)
         ->where('winner', $roundResults->rank)
@@ -53,7 +53,7 @@ class games extends Model
     public static function totalLoses($team, $round)
     {
         $roundResults = roundResults::where(['team_id' => $team->id, 'round_id' => $round])->first();
-        $loses = games::where('league', $team->league)
+        $loses = games::where('league_id', $team->league->id)
         ->where('tier', $roundResults->tier)
         ->where('round_id', $round)
         ->where('winner', '<>', $roundResults->rank)
@@ -71,7 +71,7 @@ class games extends Model
     public static function totalTies($team, $round)
     {
         $roundResults = roundResults::where(['team_id' => $team->id, 'round_id' => $round])->first();
-        $ties = games::where('league', $team->league)
+        $ties = games::where('league_id', $team->league->id)
         ->where('tier', $roundResults->tier)
         ->where('round_id', $round)
         ->where('winner', 0)

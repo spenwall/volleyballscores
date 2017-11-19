@@ -8,6 +8,7 @@ use App\team;
 use App\games;
 use App\rounds;
 use App\roundResults;
+use App\league;
 
 class ResultsController extends Controller
 {
@@ -31,12 +32,13 @@ class ResultsController extends Controller
     public function index($league, $round)
     {
          
-        $roundResults = new roundResults();
-        $roundResults->recordWins();
-        $roundResults->recordLoses();
-        $roundResults->recordTies();
+        //$roundResults = new roundResults();
+        //$roundResults->recordWins();
+        //$roundResults->recordLoses();
+        //$roundResults->recordTies();
+        //$roundResults->calculateNextRoundResults();
         $this->_round = $round;
-        $this->_league = $league;
+        $this->_league = league::where('league_name', $league)->first();
         $resultsByTier = $this->_resultsByTier();
         $teamResults = $this->_teamsResults();
         $teamsByTiers = team::teamsByTiers($league, $round);
@@ -46,7 +48,8 @@ class ResultsController extends Controller
 
     private function _resultsByTier()
     {
-        $teamsByTiers = team::teamsByTiers($this->_league, $this->_round);
+    $teamsByTiers = $this->_league->teamsForRound;
+        dd($teamsByTiers);
         foreach($teamsByTiers as $tier => $teams){
             foreach ($teams as $team1) {
                 foreach ($teams as $team2) {

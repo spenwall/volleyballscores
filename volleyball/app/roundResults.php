@@ -7,14 +7,19 @@ use App\team;
 
 class roundResults extends Model
 {
-    public function team()
+    public function teams()
     {
-        return $this->belongsTo(team::Class);
+        return $this->hasMany(team::Class);
     }
 
     public function round()
     {
         return $this->belongsTo(round::Class);
+    }
+
+    public function roundTeams($round)
+    {
+        $teams = $this->teams;
     }
 
     public static function rankForRound($team_id, $round)
