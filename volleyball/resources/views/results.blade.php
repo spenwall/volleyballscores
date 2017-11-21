@@ -17,8 +17,8 @@
                             <tr>
                                 <th>Rank</th>
                                 <th>Team</th>
-                                @foreach ($results as $result)
-                                <th>{{ $result->rank }}</th>
+                                @foreach ($results as $teamResults)
+                                <th>{{ $teamResults->rank }}</th>
                                 @endforeach
                                 <th>Wins</th>
                                 <th>loses</th>
@@ -27,17 +27,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($results as $result)
+                            @foreach ($results as $teamResults)
+                            <?php $games = $teamResults->games(); ?>
                                 <tr>
-                                    <td>{{ $result->rank }}</td>
-                                    <td>{{ $result->team->team_name }}</td>
-                                    @foreach ($results as $opponents)
-                                    <td>{{ $opponents->rank }}</td>
+                                    <td>{{ $teamResults->rank }}</td>
+                                    <td>{{ $teamResults->team->team_name }}</td>
+                                    @foreach ($results as $opponent)
+                                    <td>{{ App\games::winner($games, $teamResults->rank, $opponent->rank) }}</td>
                                     @endforeach
-                                    <td>{{ $result->wins }}</td>
-                                    <td>{{ $result->loses }}</td>
-                                    <td>{{ $result->ties }}</td>
-                                    <td>{{ $result->end_rank }}</td>
+                                    <td>{{ App\games::totalWins($games, $teamResults->rank) }}</td>
+                                    <td>{{ App\games::totalLoses($games, $teamResults->rank) }}</td>
+                                    <td>{{ App\games::totalTies($games, $teamResults->rank) }}</td>
+                                    <td>{{ $teamResults->end_rank }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class games extends Model
 {
 
+    public function league()
+    {
+        return $this->belongsTo(league::class);
+    }
+
     public static function gamesInTierRound($tier, $round, $league)
     {
         $where = ['tier' => $tier, 'round_id' => $round, 'league_id' => $league];
@@ -19,66 +24,76 @@ class games extends Model
         return $games;
     }
 
-    public function winner($team1, $team2)
+    public function team1()
     {
-        $winner = self::whereIn('team1', [$team1->rank, $team2->rank])
-                                     ->whereIn('team2', [$team1->rank, $team2->rank])
-                                     ->first();
-        if (is_null($winner)) {
-            return '-';
-        } elseif ($winner->winner == $team1->rank) {
-            return 'W';
-        } elseif ($winner->winner == $team2->rank) {
-            return 'L';
-        } elseif ($winner->winner == 0) {
-            return 'T';
-        }
-        return $winner->winner;
+        return $this->getTeam($this->team1);
     }
 
-    public static function totalWins($team, $round)
+    public function team2()
     {
-        $roundResults = roundResults::where(['team_id' => $team->id, 'round_id' => $round])->first();
-        $wins = games::where('league_id', $team->league->id)
-        ->where('tier', $roundResults->tier)
-        ->where('round_id', $round)
-        ->where('winner', $roundResults->rank)
-        ->get()
+        return $this->getTeam($this->team2);
+    }
+
+    public function getTeam($team)
+    {
+        return $roundResults = $this->league
+        ->round($this->rounds_id)->roundResults
+        ->where('rank', $team)
+        ->where('tier', $this->tier)
+        ->first()
+        ->team;
+    }
+
+    public static function winner($games, $team1, $team2)
+    {
+        $winner = $games->whereIn('team1', [$team1, $team2])
+                        ->whereIn('team2', [$team1, $team2])
+                        ->first();
+
+        if (!is_null($winner)) {
+            switch ($winner->winner) {
+                case $team1:
+                    return 'W';
+                case $team2:
+                    return 'L';
+                case 0: 
+                    return 'T';
+                case -1:
+                    return '-';
+            }
+        } else {
+            return '-';
+        }
+    }
+
+    public static function totalWins($games, $teamRank)
+    {
+        $wins = $games->where('winner', $teamRank)
         ->count();
         
         return $wins;
     }
 
-    public static function totalLoses($team, $round)
+    public static function totalLoses($games, $teamRank)
     {
-        $roundResults = roundResults::where(['team_id' => $team->id, 'round_id' => $round])->first();
-        $loses = games::where('league_id', $team->league->id)
-        ->where('tier', $roundResults->tier)
-        ->where('round_id', $round)
-        ->where('winner', '<>', $roundResults->rank)
+        $teamsGames = $games->filter(function ($game) use ($teamRank) {
+            return ($game->team1 == $teamRank || $game->team2 == $teamRank);
+        });
+        $loses = $teamsGames->where('winner', '<>', $teamRank)
         ->where('winner', '<>', 0)
-        ->where(function ($query) use ($roundResults) {
-            $query->where('team1', $roundResults->rank)
-                  ->orWhere('team2', $roundResults->rank);
-        })
-        ->get()
+        ->where('winner', '<>', -1)
         ->count();
 
         return $loses;
     }
 
-    public static function totalTies($team, $round)
+    public static function totalTies($games, $teamRank)
     {
-        $roundResults = roundResults::where(['team_id' => $team->id, 'round_id' => $round])->first();
-        $ties = games::where('league_id', $team->league->id)
-        ->where('tier', $roundResults->tier)
-        ->where('round_id', $round)
+        $teamsGames = $games->filter(function ($game) use ($teamRank) {
+            return ($game->team1 == $teamRank || $game->team2 == $teamRank);
+        });
+        $ties = $teamsGames
         ->where('winner', 0)
-        ->where(function ($query) use ($roundResults) {
-            $query->where('team1', $roundResults->rank)
-                  ->orWhere('team2', $roundResults->rank);
-        })
-        ->get()
         ->count();
 
         return $ties;

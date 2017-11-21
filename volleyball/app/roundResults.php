@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\games;
 
 class roundResults extends Model
 {
@@ -21,9 +22,16 @@ class roundResults extends Model
         $teams = $this->teams;
     }
 
+    public function games()
+    {
+        $where = ['league_id' => $this->league_id, 'tier' => $this->tier, 'rounds_id' => $this->rounds_id];
+        return games::where($where)->get();
+
+    }
+
     public static function rankForRound($team_id, $round)
     {
-        $rank = self::select('rank')->where('team_id', $team_id)->where('round_id', $round)->first();
+        $rank = self::select('rank')->where('team_id', $team_id)->where('rounds_id', $round)->first();
         
         return $rank;
     }

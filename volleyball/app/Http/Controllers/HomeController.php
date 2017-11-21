@@ -49,6 +49,7 @@ class HomeController extends Controller
         $user = Auth::user();
         $name = $user->name;
         $team = $user->team;
+        $league = $team->league;
         $games = $team->currentGames();
         $round = \App\rounds::currentRound();
         $data = array('name' => $name, 'team' => $team, 'games' => $games, 'round' => $round);

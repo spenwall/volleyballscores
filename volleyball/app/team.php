@@ -26,6 +26,26 @@ class team extends Model
         return $this->hasMany(roundResults::class);
     }
 
+    public function currentRoundResults()
+    {
+        return $this->roundResults->where('rounds_id', $this->league->currentRound()->id)->first();
+    }
+
+    public function currentRank()
+    {
+        return $this->currentRoundResults()->rank;
+    }
+
+    public function currentTier()
+    {
+        return $this->currentRoundResults()->tier;
+    }
+
+    public function currentGamesForTier()
+    {
+        return $this->league->currentRound()->games->where('tier', $this->currentTier());
+    }
+
     public function league()
     {
         return $this->belongsTo(league::class);
@@ -33,38 +53,33 @@ class team extends Model
 
     public function currentGames()
     {
+        //$currentRank = $this->currentRank();
         $currentRank = $this->currentRank();
-        $games = games::where('tier', $this->tier)
-                    ->where('round_id', rounds::currentRound())
-                    ->where('league_id', $this->league->id)
-                    ->where(function ($query) {
-                        $query->where('team1', $this->currentRank())
-                              ->orWhere('team2', $this->currentRank());
-                    })
-                    ->get();
-        $gamesArray = array();
-        foreach ($games as $game) {
-            $team1 = $this->where(self::COL_RANK, $game->team1)
-            ->where(self::COL_TIER, $this->tier)
-            ->first();
-            $team2 = $this->where(self::COL_RANK, $game->team2)
-            ->where(self::COL_TIER, $this->tier)
-            ->first();
-            $date = new DateTime($game->date);
-            $date = $date->format('F j, Y');
-            $gamesArray[] = array('id' => $game->id,
-                                    'team1' => $game->team1,
-                                    'team1_id' => $team1->id,
-                                    'team1_name' => $team1->team_name,
-                                    'team1_rank' => $team1->currentRank(), 
-                                    'team2' => $game->team2,
-                                    'team2_id' => $team2->id,
-                                    'team2_name' => $team2->team_name,
-                                    'team2_rank' => $team2->currentRank(),
-                                    'date' => $date,
-                                    'winner' => $game->winner);
-        }
-        return $gamesArray;
+        $currentTierGames = $this->currentGamesForTier();
+        $games = $currentTierGames->filter(function ($game) use ($currentRank) {
+            return ($game->team1 == $currentRank || $game->team2 == $currentRank);
+        });
+       
+        // $gamesArray = array();
+        // foreach ($games as $game) {
+        //     $team1 = $game->team1();
+        //     $team2 = $game->team2();
+        //     $date = new DateTime($game->date);
+        //     $date = $date->format('F j, Y');
+        //     $gamesArray[] = array('id' => $game->id,
+        //                             'team1' => $game->team1,
+        //                             'team1_id' => $team1->id,
+        //                             'team1_name' => $team1->team_name,
+        //                             'team1_rank' => $team1->currentRank(), 
+        //                             'team2' => $game->team2,
+        //                             'team2_id' => $team2->id,
+        //                             'team2_name' => $team2->team_name,
+        //                             'team2_rank' => $team2->currentRank(),
+        //                             'date' => $date,
+        //                             'winner' => $game->winner);
+        // }
+        // dd($gamesArray);
+        return $games;
     }
 
     /**
@@ -138,14 +153,5 @@ class team extends Model
             $teamsInTiers[$tier->tier] = team::teamsForRoundAndTier($round, $tier->tier, $league);
         }
         return $teamsInTiers;
-    }
-
-    public function currentRank()
-    {
-        $currentRound = rounds::currentRound();
-        $roundResults = $this->roundResults;
-        $currentRank = $roundResults->where('round_id', $currentRound)->first()->rank;
-        
-        return $currentRank;
     }
 }

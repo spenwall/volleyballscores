@@ -15,7 +15,7 @@ class rounds extends Model
 
     public function roundResults()
     {
-        return $this->hasMany(roundResults::class)->orderBy('rank');
+        return $this->hasMany(roundResults::class)->orderBy('tier')->orderBy('rank');
     }
 
     public function roundResultsForTier($tier)

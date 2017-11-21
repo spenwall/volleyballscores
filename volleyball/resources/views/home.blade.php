@@ -7,10 +7,10 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="team h3">
-                        {{$team->team_name}}
+                        {{ $team->team_name }}
                     </div>
                     <div class="round h4">
-                       Round {{$round}}
+                       Round {{ $round }}
                     </div>
                 </div>
                 <div class="panel-body">
@@ -34,8 +34,8 @@
                         <div class="col-md-4">
                             <div class="btn-group">
                                 <input type="hidden" name="game" value="{{$game['id']}}" />
-                                <input type="radio" name="winner" value="{{$game['team1_rank']}}" {{ $game['winner'] == $game['team1_rank'] ? "checked='checked'" : ""}}> {{$game['team1_rank']}} {{$game['team1_name']}}<br />
-                                <input type="radio" name="winner" value="{{$game['team2_rank']}}" {{ $game['winner'] == $game['team2_rank'] ? "checked='checked'" : ""}}> {{$game['team2_rank']}} {{$game['team2_name']}}<br />
+                                <input type="radio" name="winner" value="{{$game->team1()->currentRank()}}" {{ $game['winner'] == $game->team1()->currentRank() ? "checked='checked'" : ""}}> {{$game->team1()->currentRank()}} {{$game->team1()->team_name}}<br />
+                                <input type="radio" name="winner" value="{{$game->team2()->currentRank()}}" {{ $game['winner'] == $game->team2()->currentRank() ? "checked='checked'" : ""}}> {{$game->team2()->currentRank()}} {{$game->team2()->team_name}}<br />
                                 <input type="radio" name="winner" value="0" {{ $game['winner'] == 0 ? "checked='checked'" : "" }}> Tie
                             </div>
                         </div>
