@@ -29,11 +29,11 @@ class ResultsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($league, $round)
+    public function index($leagueName, $round)
     {
         $leagues = new league();
-        $coed = $leagues->where('league_name', $league)->first();
-        $resultsByTier = $coed->round($round)->roundResultsByTier();
+        $league = $leagues->where('league_name', $leagueName)->first();
+        $resultsByTier = $league->round($round)->roundResultsByTier();
        
         $data = array('resultsByTier' => $resultsByTier);
         return view('results', $data);

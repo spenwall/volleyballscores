@@ -41,6 +41,11 @@ class league extends Model
         ->first();
     }
 
+    public function byName($name)
+    {
+        return $this->where('league_name', $name)->first();
+    }
+
     public function teamsForRound()
     {
         

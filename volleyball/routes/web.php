@@ -17,8 +17,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/home', 'HomeController@scores')->name('home');
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('/schedule/{league}', 'ScheduleController@index')->name('schedule');
-Route::get('/results/{league}/{round}', 'ResultsController@index')->name('results');
+Route::get('/schedule/{leagueName}', 'ScheduleController@index')->name('schedule');
+Route::get('/results/{leagueName}/{round}', 'ResultsController@index')->name('results');
 
-Route::get('/teams/{league}', 'TeamsController@index')->name('teams');
+Route::get('/teams/{leagueName}', 'TeamsController@index')->name('teams');
 Route::get('/team/{id}', 'TeamsController@team')->name('team');

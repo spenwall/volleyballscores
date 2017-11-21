@@ -2,7 +2,7 @@
 
 @section('content')
 
-@foreach($teamsByTier as $tier => $teams)
+@foreach($roundResultsByTier as $tier => $teamResults)
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -24,13 +24,13 @@
                         <tr>
                     </thead>
                     <tbody>
-                        @foreach ($teams as $team)
+                        @foreach ($teamResults as $rank)
                             <tr>
-                                <td>{{ $team->rank }}</td>
-                                <td><a href="{{ route('team', ['id' => $team->id]) }}">{{ $team->team_name }}</a></td>
-                                <td>{{ $team->contact_name }}</td>
-                                <td>{{ $team->contact_phone }}</td>
-                                <td>{{ $team->contact_email }}</td>
+                                <td>{{ $rank->rank }}</td>
+                                <td><a href="{{ route('team', ['id' => $rank->team->id]) }}">{{ $rank->team->team_name }}</a></td>
+                                <td>{{ $rank->team->contact_name }}</td>
+                                <td>{{ $rank->team->contact_phone }}</td>
+                                <td>{{ $rank->team->contact_email }}</td>
                             </tr>
                         @endforeach
                     </tbody>

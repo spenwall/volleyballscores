@@ -17,11 +17,6 @@ class roundResults extends Model
         return $this->belongsTo(round::Class);
     }
 
-    public function roundTeams($round)
-    {
-        $teams = $this->teams;
-    }
-
     public function games()
     {
         $where = ['league_id' => $this->league_id, 'tier' => $this->tier, 'rounds_id' => $this->rounds_id];

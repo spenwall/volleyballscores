@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\team;
+use App\league;
 
 class TeamsController extends Controller
 {
-    public function index($league)
+    public function index($leagueName)
     {
-        $data['teamsByTier'] = team::currentTeamsByTiers($league);
+        $leagues = new league();
+        $league = $leagues->byName($leagueName);
+        $roundResultsByTier = $league->currentRound()->roundResultsByTier();
+        $data = ['roundResultsByTier' => $roundResultsByTier];
         return view('teams', $data);
     }
 
