@@ -19,10 +19,9 @@ class games extends Model
         return $games;
     }
 
-    public static function winner($team1, $team2, $round, $tier)
+    public function winner($team1, $team2)
     {
-        $where = ['tier' => $tier, 'round_id' => $round, 'league_id' => $team1->league->id];
-        $winner = self::where($where)->whereIn('team1', [$team1->rank, $team2->rank])
+        $winner = self::whereIn('team1', [$team1->rank, $team2->rank])
                                      ->whereIn('team2', [$team1->rank, $team2->rank])
                                      ->first();
         if (is_null($winner)) {

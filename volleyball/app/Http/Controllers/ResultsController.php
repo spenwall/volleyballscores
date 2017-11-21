@@ -33,21 +33,14 @@ class ResultsController extends Controller
     {
         $leagues = new league();
         $coed = $leagues->where('league_name', $league)->first();
-        $resultsForTier = $coed->round($round)->roundResultsForTier(2);
-        dd($resultsForTier);
-        dd($resultsbyTier);
-        foreach ($resultsbyTier as $tier) {
-            foreach($tier as $result) {
-                $team = $result->team;
-                dd($team);
-            }
-        }
-        $this->_round = $round;
-        $this->_league = league::where('league_name', $league)->first();
-        $resultsByTier = $this->_resultsByTier();
-        $teamResults = $this->_teamsResults();
-        $teamsByTiers = team::teamsByTiers($league, $round);
-        $data = array('resultsByTier' => $resultsByTier, 'teamsByTiers' => $teamResults);
+        $resultsByTier = $coed->round($round)->roundResultsByTier();
+       
+        // $this->_round = $round;
+        // $this->_league = league::where('league_name', $league)->first();
+        // $resultsByTier = $this->_resultsByTier();
+        // $teamResults = $this->_teamsResults();
+        // $teamsByTiers = team::teamsByTiers($league, $round);
+        $data = array('resultsByTier' => $resultsByTier);
         return view('results', $data);
     }
 

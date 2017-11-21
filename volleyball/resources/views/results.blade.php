@@ -17,8 +17,8 @@
                             <tr>
                                 <th>Rank</th>
                                 <th>Team</th>
-                                @foreach ($teamsByTiers[$tier] as $teamByRound)
-                                <th>{{ $teamByRound->rank }}</th>
+                                @foreach ($results as $result)
+                                <th>{{ $result->rank }}</th>
                                 @endforeach
                                 <th>Wins</th>
                                 <th>loses</th>
@@ -27,17 +27,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($teamsByTiers[$tier] as $team)
+                            @foreach ($results as $result)
                                 <tr>
-                                    <td>{{ $team->rank }}</td>
-                                    <td>{{ $team->team_name }}</td>
-                                    @foreach ($teamsByTiers[$tier] as $opponent)
-                                    <td>{{ $results[$team->rank][$opponent->rank] }}
+                                    <td>{{ $result->rank }}</td>
+                                    <td>{{ $result->team->team_name }}</td>
+                                    @foreach ($results as $opponents)
+                                    <td>{{ $opponents->rank }}</td>
                                     @endforeach
-                                    <td>{{ $team->wins }}</td>
-                                    <td>{{ $team->loses }}</td>
-                                    <td>{{ $team->ties }}</td>
-                                    <td>{{ $team->end_rank }}</td>
+                                    <td>{{ $result->wins }}</td>
+                                    <td>{{ $result->loses }}</td>
+                                    <td>{{ $result->ties }}</td>
+                                    <td>{{ $result->end_rank }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

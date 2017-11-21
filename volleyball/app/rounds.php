@@ -23,6 +23,11 @@ class rounds extends Model
         return $this->roundResults()->where('tier', $tier)->get();
     }
 
+    public function roundResultsByTier()
+    {
+        return $this->roundResults->groupBy('tier');
+    }
+
     public static function currentRound()
     {
         $current = carbon::now();
