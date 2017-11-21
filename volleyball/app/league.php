@@ -34,7 +34,6 @@ class league extends Model
 
     public function teamsForRound()
     {
-        $teams = $this->teams()->union($this->roundResults())->get();
-        dd($teams);
+        
     }
 }

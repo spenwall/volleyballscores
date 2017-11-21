@@ -31,12 +31,17 @@ class ResultsController extends Controller
      */
     public function index($league, $round)
     {
-         
-        //$roundResults = new roundResults();
-        //$roundResults->recordWins();
-        //$roundResults->recordLoses();
-        //$roundResults->recordTies();
-        //$roundResults->calculateNextRoundResults();
+        $leagues = new league();
+        $coed = $leagues->where('league_name', $league)->first();
+        $resultsForTier = $coed->round($round)->roundResultsForTier(2);
+        dd($resultsForTier);
+        dd($resultsbyTier);
+        foreach ($resultsbyTier as $tier) {
+            foreach($tier as $result) {
+                $team = $result->team;
+                dd($team);
+            }
+        }
         $this->_round = $round;
         $this->_league = league::where('league_name', $league)->first();
         $resultsByTier = $this->_resultsByTier();

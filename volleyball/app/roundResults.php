@@ -3,13 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\team;
 
 class roundResults extends Model
 {
-    public function teams()
+    public function team()
     {
-        return $this->hasMany(team::Class);
+        return $this->belongsTo(team::Class);
     }
 
     public function round()

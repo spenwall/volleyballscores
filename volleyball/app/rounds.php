@@ -13,6 +13,16 @@ class rounds extends Model
         return $this->belongsTo(league::class);
     }
 
+    public function roundResults()
+    {
+        return $this->hasMany(roundResults::class)->orderBy('rank');
+    }
+
+    public function roundResultsForTier($tier)
+    {
+        return $this->roundResults()->where('tier', $tier)->get();
+    }
+
     public static function currentRound()
     {
         $current = carbon::now();
@@ -32,11 +42,6 @@ class rounds extends Model
     public function games()
     {
         return $this->hasMany(games::class);
-    }
-
-    public function roundResults()
-    {
-        return $this->hasMany(roundResults::class);
     }
 
     public function coedResults()
