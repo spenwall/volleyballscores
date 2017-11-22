@@ -34,55 +34,45 @@ class roundResults extends Model
     public function recordWins()
     {
         //calculate wins for round/tier/league
-        $round = 2;
-        $tier = 1;
-        $roundResults = $this->where('round_id', $round)
-                            ->get();
+        $wins = games::totalWins($this->games(), $this->rank);
 
-        foreach ($roundResults as $roundResult) {
-            $team = team::find($roundResult->team_id);
-            $wins = games::totalWins($team, $round);
-            $roundResult->wins = $wins;
-            $roundResult->save();
-        }
+        $this->wins = $wins;
+        $this->save();
     }
 
     public function recordLoses()
     {
-        $round = 2;
-        $tier = 1;
-        $roundResults = $this->where('round_id', $round)->get();
+        $loses = games::totalLoses($this->games(), $this->rank);
 
-        foreach ($roundResults as $roundResult) {
-            $team = team::find($roundResult->team_id);
-            $loses = games::totalLoses($team, $round);
-            $roundResult->loses = $loses;
-            $roundResult->save();
-        }
+        $this->loses = $loses;
+        $this->save();
     }
 
     public function recordTies()
     {
-        $round = 2;
-        $tier = 1;
-        $roundResults = $this->where('round_id', $round)->get();
+        $ties = games::totalTies($this->games(), $this->rank);
 
-        foreach ($roundResults as $roundResult) {
-            $team = team::find($roundResult->team_id);
-            $ties = games::totalTies($team, $round);
-            $roundResult->ties = $ties;
-            $roundResult->save();
-        }
+        $this->ties = $ties;
+        $this->save();
     }
 
-    public static function calculateRank($round)
+    public function recordScores()
     {
-        $roundResults = self::where('rounds_id', $round)
+        $this->recordWins();
+        $this->recordLoses();
+        $this->recordTies();
+    }
+
+    public function calculateRank()
+    {
+        $this->recordScores();
+
+        $roundResults = self::where('rounds_id', $this->rounds_id)
+        ->where('tier', $this->tier)
+        ->where('league_id', $this->league_id)
         ->orderBy('wins', 'DESC')
         ->orderBy('rank')
-        ->groupBy('tier')
         ->get();
-        dd($roundResults);
         $count = 1;
         foreach ($roundResults as $result) {
             $result->end_rank = $count;
@@ -91,10 +81,8 @@ class roundResults extends Model
         }
     }
 
-    public function calculateNextRoundResults()
+    public function calculateNextRoundResults($round)
     {
-        $round = 2;
-        $league = 'co-ed';
         $roundResults = $this::where('round_id', $round)
         ->where('league', $league)
         ->get();

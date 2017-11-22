@@ -41,6 +41,11 @@ class ResultsController extends Controller
 
     public function calculate($leagueName, $round)
     {
-        roundResults::calculateRank(1);
+        $leagues = new league();
+        $league = $leagues->byName($leagueName);
+        $roundResults = $league->round($round)->roundResults;
+        foreach ($roundResults as $result) {
+            $result->calculateRank();
+        }
     }
 }

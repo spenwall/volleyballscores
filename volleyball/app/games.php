@@ -68,10 +68,7 @@ class games extends Model
 
     public static function totalWins($games, $teamRank)
     {
-        $wins = $games->where('winner', $teamRank)
-        ->count();
-        
-        return $wins;
+        return $games->where('winner', $teamRank)->count();
     }
 
     public static function totalLoses($games, $teamRank)
