@@ -21,6 +21,9 @@
                     <div class="h3">
                         Roster
                     </div>
+                    @foreach ($team->players as $player)
+                    <div>{{ $player->player_name }}</div>
+                    @endforeach
                 </div>
             </div>
         </div>

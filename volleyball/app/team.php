@@ -51,34 +51,18 @@ class team extends Model
         return $this->belongsTo(league::class);
     }
 
+    public function players()
+    {
+        return $this->hasMany(player::class);
+    }
+
     public function currentGames()
     {
-        //$currentRank = $this->currentRank();
         $currentRank = $this->currentRank();
         $currentTierGames = $this->currentGamesForTier();
         $games = $currentTierGames->filter(function ($game) use ($currentRank) {
             return ($game->team1 == $currentRank || $game->team2 == $currentRank);
         });
-       
-        // $gamesArray = array();
-        // foreach ($games as $game) {
-        //     $team1 = $game->team1();
-        //     $team2 = $game->team2();
-        //     $date = new DateTime($game->date);
-        //     $date = $date->format('F j, Y');
-        //     $gamesArray[] = array('id' => $game->id,
-        //                             'team1' => $game->team1,
-        //                             'team1_id' => $team1->id,
-        //                             'team1_name' => $team1->team_name,
-        //                             'team1_rank' => $team1->currentRank(), 
-        //                             'team2' => $game->team2,
-        //                             'team2_id' => $team2->id,
-        //                             'team2_name' => $team2->team_name,
-        //                             'team2_rank' => $team2->currentRank(),
-        //                             'date' => $date,
-        //                             'winner' => $game->winner);
-        // }
-        // dd($gamesArray);
         return $games;
     }
 

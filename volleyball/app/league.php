@@ -46,8 +46,14 @@ class league extends Model
         return $this->where('league_name', $name)->first();
     }
 
-    public function teamsForRound()
+    public static function leagues()
     {
-        
+        return self::all();
+    }
+
+    public function roundsToDate()
+    {
+        $current = carbon::now();
+        return $this->rounds->where('start', '<', $current);
     }
 }
