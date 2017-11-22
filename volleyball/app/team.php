@@ -53,7 +53,7 @@ class team extends Model
 
     public function players()
     {
-        return $this->hasMany(player::class);
+        return $this->hasMany(Player::class);
     }
 
     public function currentGames()

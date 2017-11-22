@@ -47,5 +47,10 @@ class ResultsController extends Controller
         foreach ($roundResults as $result) {
             $result->calculateRank();
         }
+        foreach ($roundResults as $result) {
+            $result->calculateNextRoundResults();
+        }
+
+        return redirect()->route('results', [$leagueName,$round]);
     }
 }

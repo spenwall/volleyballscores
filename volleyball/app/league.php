@@ -56,4 +56,11 @@ class league extends Model
         $current = carbon::now();
         return $this->rounds->where('start', '<', $current);
     }
+
+    public function nextRound($round)
+    {
+        $nextRound = $round->round;
+        $nextRound++;
+        return $this->rounds->where('round', $nextRound)->first();
+    }
 }

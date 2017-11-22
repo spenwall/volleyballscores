@@ -7,7 +7,11 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="h3">
-                        {{ $team->team_name }} #{{ $team->rank }}
+                        {{ $team->team_name }} <br>
+                    </div>
+                    <div class="h4">
+                        Tier: {{ $team->tier }} <br>
+                        Rank: {{ $team->currentRank() }} <br>
                     </div>
                 </div>
                 <div class="panel-body">
