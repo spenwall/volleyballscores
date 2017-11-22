@@ -38,4 +38,9 @@ class ResultsController extends Controller
         $data = array('resultsByTier' => $resultsByTier);
         return view('results', $data);
     }
+
+    public function calculate($leagueName, $round)
+    {
+        roundResults::calculateRank(1);
+    }
 }

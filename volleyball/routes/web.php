@@ -19,6 +19,7 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/schedule/{leagueName}', 'ScheduleController@index')->name('schedule');
 Route::get('/results/{leagueName}/{round}', 'ResultsController@index')->name('results');
+Route::get('/calculate/{leagueName}/{round}', 'ResultsController@calculate')->name('calculate');
 
 Route::get('/teams/{leagueName}', 'TeamsController@index')->name('teams');
 Route::get('/team/{id}', 'TeamsController@team')->name('team');

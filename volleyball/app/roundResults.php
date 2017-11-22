@@ -75,17 +75,19 @@ class roundResults extends Model
         }
     }
 
-    public static function calculateRank($tier, $round)
+    public static function calculateRank($round)
     {
-        $roundResults = self::where('tier', $tier)->where('round_id', $round)
+        $roundResults = self::where('rounds_id', $round)
         ->orderBy('wins', 'DESC')
         ->orderBy('rank')
+        ->groupBy('tier')
         ->get();
+        dd($roundResults);
         $count = 1;
         foreach ($roundResults as $result) {
             $result->end_rank = $count;
-            $count++;
             $result->save();
+            $count++;
         }
     }
 
