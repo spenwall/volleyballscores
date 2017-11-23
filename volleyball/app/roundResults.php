@@ -92,30 +92,17 @@ class roundResults extends Model
 
     public function calculateNextRoundResults()
     {
-            switch ($this->end_rank) {
-                case 1:
-                case 2:
-                case 3:
-                    $newTier = $this->tier - 1;
-                    break;
-                case 4:
-                case 5:
-                    $newTier = $this->tier;
-                    break;
-                case 6:
-                case 7:
-                case 8:
-                    $newTier = $this->tier + 1;
-                    break;
-            }
-            if ($newTier < 1) {
-                $newTier = 1;
-            } else if ($newTier > team::lowestTier($this->league_id)) {
-                $newTier = $this->tier;
-            }
-            $newRank = $this->_getNewRank();
+        $newTier = $this->_newTier();
+            
+        $newRank = $this->_getNewRank();
 
-            $nextRound = $this->league->nextRound($this->rounds);
+        $nextRound = $this->league->nextRound($this->rounds);
+        
+        if ($updateResult = $this->_resultExists($newTier, $newRank, $nextRound)) {
+            $updateResult->team_id = $this->team_id;
+            $updateResult->save();
+        } else {
+            dd('updateResult not there?');
             $newResult = new self;
             $newResult->rounds_id = $nextRound->id;
             $newResult->team_id = $this->team_id;
@@ -123,6 +110,42 @@ class roundResults extends Model
             $newResult->tier = $newTier;
             $newResult->league_id = $this->league_id;
             $newResult->save();
+        }
+    }
+
+    private function _resultExists($tier, $rank, $nextRound)
+    {
+        $where = ['tier' => $tier, 'rank' => $rank, 
+                'league_id' => $this->league_id,
+                'rounds_id' => $nextRound->id];
+        return $this->where($where)->first();
+    }
+
+    private function _newTier()
+    {
+        switch ($this->end_rank) {
+            case 1:
+            case 2:
+            case 3:
+                $newTier = $this->tier - 1;
+                break;
+            case 4:
+            case 5:
+                $newTier = $this->tier;
+                break;
+            case 6:
+            case 7:
+            case 8:
+                $newTier = $this->tier + 1;
+                break;
+        }
+        if ($newTier < 1) {
+            $newTier = 1;
+        } else if ($newTier > team::lowestTier($this->league_id)) {
+            $newTier = $this->tier;
+        }
+
+        return $newTier;
     }
 
     private function _getNewRank()
