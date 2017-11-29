@@ -12,6 +12,11 @@ keys:
 folders:
     - map: ~/websites/volleyballscores/volleyball
       to: /home/volleyball
+      options:
+            fsnotify: true
+            exclude:
+                - node_modules
+                - vendor
 
 sites:
     - map: volleyball.dev
