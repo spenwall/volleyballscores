@@ -8371,7 +8371,7 @@ button.close {
   margin-top: 10px;
 }
 
-.round {
-  margin-top: 10px;
+.table-responsive {
+  display: block;
 }
 
