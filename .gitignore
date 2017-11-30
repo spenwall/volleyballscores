@@ -11,3 +11,4 @@
 .gitignore
 /.config
 /.vim
+volleyball/mix-manifest.json
