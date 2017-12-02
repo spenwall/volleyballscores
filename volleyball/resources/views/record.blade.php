@@ -28,7 +28,7 @@
                     <div class="games">
                         <div class="col-md-4">
                             <div class="game-date">
-                                {{$game['date']}}
+                                {{ $game->date->toDayDateTimeString() }}
                             </div>
                         </div>
                         <div class="col-md-4">

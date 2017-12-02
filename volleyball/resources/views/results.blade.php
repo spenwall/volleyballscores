@@ -31,7 +31,7 @@
                             <?php $games = $teamResults->games(); ?>
                                 <tr>
                                     <td>{{ $teamResults->rank }}</td>
-                                    <td>{{ $teamResults->team->team_name }}</td>
+                                    <td class="team-name">{{ $teamResults->team->team_name }}</td>
                                     @foreach ($results as $opponent)
                                         <?php $winner = App\games::winner($games, $teamResults->rank, $opponent->rank); ?>
                                         @if ($winner == '-')

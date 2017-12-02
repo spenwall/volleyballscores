@@ -8371,7 +8371,13 @@ button.close {
   margin-top: 10px;
 }
 
-.table-responsive {
-  display: block;
+@media (max-width: 750px) {
+  .table-responsive {
+    display: block;
+  }
+}
+
+.team-name {
+  min-width: 200px;
 }
 

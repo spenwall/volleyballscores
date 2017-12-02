@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                <table class="table">
+                <table class="table table-striped table-responsive">
                     <thead>
                         <tr>
                             <th>Team #</th>

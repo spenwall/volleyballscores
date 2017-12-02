@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class games extends Model
 {
 
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'date',
+    ];
+
     public function league()
     {
         return $this->belongsTo(league::class);
@@ -14,7 +20,7 @@ class games extends Model
 
     public static function gamesInTierRound($tier, $round, $league)
     {
-        $where = ['tier' => $tier, 'round_id' => $round, 'league_id' => $league];
+        $where = ['tier' => $tier, 'rounds_id' => $round, 'league_id' => $league];
         $games = self::where($where)
         ->orderBy('date')
         ->orderBy('location')

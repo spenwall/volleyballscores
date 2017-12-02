@@ -18,6 +18,11 @@ class league extends Model
         return $this->hasMany(games::class);
     }
 
+    public function gamesByTier($tier)
+    {
+        return $this->games()->where('tier', $tier)->get();
+    }
+
     public function rounds()
     {
         return $this->hasMany(rounds::class);
@@ -41,9 +46,9 @@ class league extends Model
         ->first();
     }
 
-    public function byName($name)
+    public static function byName($name)
     {
-        return $this->where('league_name', $name)->first();
+        return self::where('league_name', $name)->first();
     }
 
     public static function leagues()
