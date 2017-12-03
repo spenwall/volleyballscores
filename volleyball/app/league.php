@@ -18,9 +18,9 @@ class league extends Model
         return $this->hasMany(games::class);
     }
 
-    public function gamesByTier($tier)
+    public function getGames()
     {
-        return $this->games()->where('tier', $tier)->get();
+        
     }
 
     public function rounds()
@@ -59,7 +59,7 @@ class league extends Model
     public function roundsToDate()
     {
         $current = carbon::now();
-        return $this->rounds->where('start', '<', $current);
+        return $this->rounds->where('start', '<', $current)->sortBy('round');
     }
 
     public function nextRound($round)
