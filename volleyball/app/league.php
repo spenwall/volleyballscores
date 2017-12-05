@@ -18,9 +18,14 @@ class league extends Model
         return $this->hasMany(games::class);
     }
 
-    public function getGames()
+    public function gamesByTier($tier)
     {
-        
+        return $this->games()->where('tier', $tier)->get();
+    }
+
+    public function leagueTiers()
+    {
+        $this->teams;
     }
 
     public function rounds()

@@ -34,7 +34,7 @@ class ResultsController extends Controller
         $leagues = new league();
         $league = $leagues->where('league_name', $leagueName)->first();
         $resultsByTier = $league->round($round)->roundResultsByTier();
-       
+         
         $data = array('resultsByTier' => $resultsByTier);
         return view('results', $data);
     }
