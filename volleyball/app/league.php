@@ -25,7 +25,8 @@ class league extends Model
 
     public function leagueTiers()
     {
-        $this->teams;
+        $teams = $this->teams()->get();
+        return $teams->groupBy('tier')->keys();
     }
 
     public function rounds()

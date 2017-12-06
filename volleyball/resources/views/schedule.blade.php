@@ -7,7 +7,9 @@
         <div class="col-md-8 col-md-offset-2">
             <ul class="nav nav-tabs">
                 @foreach($tiers as $key => $tier)
-                <li role="presentation" class="{{ $key == 0 ? "active" : "" }}"><a href="#">Tier {{ $tier->tier }}</a></li>
+                <li role="presentation" class="{{ $key == 0 ? "active" : "" }}">
+                    <a href="#">Tier {{ $tier }}</a>
+                </li>
                 @endforeach
             </ul>
         </div>  
@@ -21,25 +23,23 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="team h3">
-                        Tier {{ $tiers[0]->tier }} Schedule
+                        Tier {{ $tiers[0] }} Schedule
                     </div>
                 </div>
                 <div class="panel-body">
                     <table class="table table-bordered table-responsive">
                             <tr>
                                 <th rowspan="2">Date</th>
-                                @foreach($courts as $location => $allCourts)
-                                <th colspan="{{ count($allCourts) }}">{{ $location }}</th>
+                                @foreach($games as $round_id => $round_games)
+                                    <?php $locations = $round_games->groupBy('location'); ?>
+                                    <?php dd($locations); ?>
+                                    @foreach ($locations as $location => $games)
+                                        <th colspan="{{ count($locations) }}">{{ $location }}</th>
+                                    @endforeach
                                 @endforeach
                             </tr>
                             <tr>
-                            @foreach($courts as $location => $court)
-                                @foreach ($court as $courtNumber => $games)
-                                    <?php xdebug_break(); ?>
-                                    <th>{{ $courtNumber }}</th>
-                                @endforeach
-                            @endforeach
-                            </tr>
+                           </tr>
                             <tr>
                                 <td rowspan="2">Date</td>
                                 <td>Game</td>
