@@ -13,15 +13,11 @@ class ScheduleController extends Controller
     {
         $league = league::byName($leagueName);
         $games = $league->gamesbyTier(1);
-        $games = $games->groupBy('rounds_id');
+        $round_games = $games->groupBy('rounds_id');
         $tiers = $league->leagueTiers();
-        // foreach ($games as $game) {
-        //     dd($game->groupBy());
-        // }
-        // $games = array();
-        // foreach($allLocations as $building => $collection) {
-        //     $courts[$building] = $collection->groupBy('court');
-        // }
-        return view('schedule', ['games' => $games, 'tiers' => $tiers]);
+        foreach ($round_games as $game) {
+            //seperate the games into days then into locations then into courts
+        }
+        return view('schedule', ['games' => $round_games, 'tiers' => $tiers]);
     }
 }
