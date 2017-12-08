@@ -15,7 +15,7 @@ class league extends Model
 
     public function games()
     {
-        return $this->hasMany(games::class);
+        return $this->hasMany(Games::class);
     }
 
     public function gamesByTier($tier)

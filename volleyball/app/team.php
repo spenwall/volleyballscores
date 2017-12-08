@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use \Datetime;
 use \App\rounds;
 use \App\roundResults;
-use App\games;
+use App\Games;
 
 class team extends Model
 {
@@ -116,9 +116,9 @@ class team extends Model
                                 ->orderBy('round_results.rank')
                                 ->get();
         foreach ($teams as $team) {
-            $team->wins = games::totalWins($team, $round);
-            $team->loses = games::totalLoses($team, $round);
-            $team->ties = games::totalTies($team, $round);
+            $team->wins = Games::totalWins($team, $round);
+            $team->loses = Games::totalLoses($team, $round);
+            $team->ties = Games::totalTies($team, $round);
         }
         return $teams;
     }

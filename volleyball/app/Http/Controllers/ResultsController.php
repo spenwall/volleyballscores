@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\team;
-use App\games;
+use App\Games;
 use App\rounds;
 use App\roundResults;
 use App\league;

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\rounds;
 use App\team;
-use App\games;
+use App\Games;
 
 
 class RecordscoresController extends Controller
@@ -37,7 +37,7 @@ class RecordscoresController extends Controller
         $game = request('game');
         $winner = request('winner');
         
-        $gameRow = games::find($game);
+        $gameRow = Games::find($game);
         $gameRow->winner = $winner;
         $gameRow->save();
         

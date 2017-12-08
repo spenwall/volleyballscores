@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\games;
+use App\Games;
 
 class roundResults extends Model
 {
@@ -25,7 +25,7 @@ class roundResults extends Model
     public function games()
     {
         $where = ['league_id' => $this->league_id, 'tier' => $this->tier, 'rounds_id' => $this->rounds_id];
-        return games::where($where)->get();
+        return Games::where($where)->get();
 
     }
 
@@ -39,7 +39,7 @@ class roundResults extends Model
     public function recordWins()
     {
         //calculate wins for round/tier/league
-        $wins = games::totalWins($this->games(), $this->rank);
+        $wins = Games::totalWins($this->games(), $this->rank);
 
         $this->wins = $wins;
         $this->save();
@@ -47,7 +47,7 @@ class roundResults extends Model
 
     public function recordLoses()
     {
-        $loses = games::totalLoses($this->games(), $this->rank);
+        $loses = Games::totalLoses($this->games(), $this->rank);
 
         $this->loses = $loses;
         $this->save();
@@ -55,7 +55,7 @@ class roundResults extends Model
 
     public function recordTies()
     {
-        $ties = games::totalTies($this->games(), $this->rank);
+        $ties = Games::totalTies($this->games(), $this->rank);
 
         $this->ties = $ties;
         $this->save();

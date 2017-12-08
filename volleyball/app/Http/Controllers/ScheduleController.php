@@ -9,10 +9,14 @@ use App\league;
 
 class ScheduleController extends Controller
 {
+    /**
+     * Schedule Controller
+     * 
+     */
     public function index($leagueName)
     {
         $league = league::byName($leagueName);
-        $games = $league->gamesbyTier(1);
+        $Games = $league->gamesbyTier(1);
         $round_games = $games->groupBy('rounds_id');
         $tiers = $league->leagueTiers();
         foreach ($round_games as $game) {
