@@ -39,6 +39,11 @@ class ResultsController extends Controller
         return view('results', $data);
     }
 
+    /**
+     * 
+     * @param string $leagueName - the string league name.
+     * @param int $round - The round number
+     */
     public function calculate($leagueName, $round)
     {
         $leagues = new league();
