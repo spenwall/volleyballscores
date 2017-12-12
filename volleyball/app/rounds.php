@@ -13,6 +13,10 @@ class rounds extends Model
         return $this->belongsTo(league::class);
     }
 
+    /**
+     * 
+     * results for a round
+     */
     public function roundResults()
     {
         return $this->hasMany(roundResults::class)->orderBy('tier')->orderBy('rank');
