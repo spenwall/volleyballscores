@@ -8,30 +8,51 @@ use \Carbon\carbon;
 class rounds extends Model
 {
 
+    /**
+     * The League for a round
+     * 
+     * @return League
+     */
     public function league()
     {
         return $this->belongsTo(league::class);
     }
 
     /**
+     * All results for a round. Sorted by Tier and then rank
      * 
-     * results for a round
+     * @return RoundResults
      */
     public function roundResults()
     {
         return $this->hasMany(roundResults::class)->orderBy('tier')->orderBy('rank');
     }
 
+    /**
+     * Round results for a given tier
+     * 
+     * @return RoundResults
+     */
     public function roundResultsForTier($tier)
     {
         return $this->roundResults()->where('tier', $tier)->get();
     }
 
+    /**
+     * All Round results grouped by tier
+     * 
+     * @return RoundResults
+     */
     public function roundResultsByTier()
     {
         return $this->roundResults->groupBy('tier');
     }
 
+    /**
+     * The round we are currently in. Should be call on a league
+     * 
+     * @return int Round
+     */
     public static function currentRound()
     {
         $current = carbon::now();
@@ -40,7 +61,12 @@ class rounds extends Model
                         ->first();
         return $rounds->round;
     }
-
+    
+    /**
+     * All rounds from 1 to current
+     * 
+     * @return Rounds collection
+     */
     public static function roundsToDate()
     {
         $current = carbon::now();
@@ -48,25 +74,13 @@ class rounds extends Model
         return $rounds;
     }
 
+    /**
+     * All games for a round
+     * 
+     * @return Games
+     */
     public function games()
     {
         return $this->hasMany(Games::class);
-    }
-
-    public function coedResults()
-    {
-        return $this->roundResults()->where('tier', 1)->get();
-    }
-
-    public function gamesByLeague($league)
-    {
-        $games = $this->games()->get();
-        return $games->where('league', $league);
-    }
-
-    public function gamesByLeagueTier($league, $tier)
-    {
-        $games = $this->games()->get();
-        return $games->where('league', $league)->where('tier', $tier);
     }
 }
