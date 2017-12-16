@@ -14,7 +14,7 @@ class roundResults extends Model
 
     public function rounds()
     {
-        return $this->belongsTo(rounds::Class);
+        return $this->belongsTo(Rounds::Class);
     }
 
     public function league()

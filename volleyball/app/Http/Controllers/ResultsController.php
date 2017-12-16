@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\team;
 use App\Games;
-use App\rounds;
+use App\Rounds;
 use App\roundResults;
 use App\league;
 

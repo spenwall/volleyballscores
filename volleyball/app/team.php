@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use \Datetime;
-use \App\rounds;
+use \App\Rounds;
 use \App\roundResults;
 use App\Games;
 
@@ -125,7 +125,7 @@ class team extends Model
 
     public static function currentTeamsByTiers($league)
     {
-        return self::teamsByTiers($league, rounds::currentRound());
+        return self::teamsByTiers($league, Rounds::currentRound());
     }
 
     public static function teamsByTiers($league, $round)
