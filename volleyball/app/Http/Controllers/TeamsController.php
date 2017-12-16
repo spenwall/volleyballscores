@@ -12,6 +12,7 @@ class TeamsController extends Controller
     {
         $leagues = new league();
         $league = $leagues->byName($leagueName);
+        dd($league);
         $roundResultsByTier = $league->currentRound()->roundResultsByTier();
         $data = ['roundResultsByTier' => $roundResultsByTier];
         return view('teams', $data);

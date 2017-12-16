@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use \Carbon\carbon;
 
-class rounds extends Model
+class Rounds extends Model
 {
 
     /**

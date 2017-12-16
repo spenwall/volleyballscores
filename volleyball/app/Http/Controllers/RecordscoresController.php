@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\rounds;
+use App\Rounds;
 use App\team;
 use App\Games;
 
@@ -53,7 +53,7 @@ class RecordscoresController extends Controller
         $team = $user->team;
         $league = $team->league;
         $games = $team->currentGames();
-        $round = rounds::currentRound();
+        $round = Rounds::currentRound();
         $data = array('name' => $name, 'team' => $team, 'games' => $games, 'round' => $round);
         return $data;
     }
