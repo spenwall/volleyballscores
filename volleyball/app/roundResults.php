@@ -19,7 +19,7 @@ class roundResults extends Model
 
     public function league()
     {
-        return $this->belongsTo(league::Class);
+        return $this->belongsTo(League::Class);
     }
 
     public function games()

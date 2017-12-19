@@ -15,10 +15,10 @@ class Games extends Model
 
     public function league()
     {
-        return $this->belongsTo(league::class);
+        return $this->belongsTo(League::class);
     }
 
-    public static function gamesInTierRound($tier, $round, $league)
+    public static function gamesInTierRound($tier, $round, $League)
     {
         $where = ['tier' => $tier, 'rounds_id' => $round, 'league_id' => $league];
         $games = self::where($where)

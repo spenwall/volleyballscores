@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\team;
-use App\league;
+use App\League;
 
 class TeamsController extends Controller
 {
     public function index($leagueName)
     {
-        $leagues = new league();
+        $leagues = new League();
         $league = $leagues->byName($leagueName);
         $roundResultsByTier = $league->currentRound()->roundResultsByTier();
         $data = ['roundResultsByTier' => $roundResultsByTier];

@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use \Carbon\carbon;
 
-class league extends Model
+class League extends Model
 {
 
     public function teams()

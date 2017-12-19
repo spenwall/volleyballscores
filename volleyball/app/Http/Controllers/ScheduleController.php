@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\team;
 use App\games;
-use App\league;
+use App\League;
 
 class ScheduleController extends Controller
 {
@@ -15,7 +15,7 @@ class ScheduleController extends Controller
      */
     public function index($leagueName)
     {
-        $league = league::byName($leagueName);
+        $League = League::byName($leagueName);
         $Games = $league->gamesbyTier(1);
         $round_games = $games->groupBy('rounds_id');
         $tiers = $league->leagueTiers();

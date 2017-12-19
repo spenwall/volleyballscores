@@ -8,7 +8,7 @@ use App\team;
 use App\Games;
 use App\Rounds;
 use App\roundResults;
-use App\league;
+use App\League;
 
 class ResultsController extends Controller
 {
@@ -31,7 +31,7 @@ class ResultsController extends Controller
      */
     public function index($leagueName, $round)
     {
-        $leagues = new league();
+        $leagues = new League();
         $league = $leagues->where('league_name', $leagueName)->first();
         $resultsByTier = $league->round($round)->roundResultsByTier();
          
@@ -46,8 +46,8 @@ class ResultsController extends Controller
      */
     public function calculate($leagueName, $round)
     {
-        $leagues = new league();
-        $league = $leagues->byName($leagueName);
+        $leagues = new League();
+        $League = $leagues->byName($leagueName);
         $roundResults = $league->round($round)->roundResults;
         foreach ($roundResults as $result) {
             $result->calculateRank();
