@@ -36,7 +36,7 @@ class League extends Model
     
     public function roundResults()
     {
-        return $this->hasMany(roundResults::class);
+        return $this->hasMany(RoundResults::class);
     }
 
     public function round($round)

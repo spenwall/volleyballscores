@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use \Datetime;
 use \App\Rounds;
-use \App\roundResults;
+use \App\RoundResults;
 use App\Games;
 
 class team extends Model
@@ -23,7 +23,7 @@ class team extends Model
 
     public function roundResults()
     {
-        return $this->hasMany(roundResults::class);
+        return $this->hasMany(RoundResults::class);
     }
 
     public function currentRoundResults()

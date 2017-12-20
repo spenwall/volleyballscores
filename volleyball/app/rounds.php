@@ -25,7 +25,7 @@ class Rounds extends Model
      */
     public function roundResults()
     {
-        return $this->hasMany(roundResults::class)->orderBy('tier')->orderBy('rank');
+        return $this->hasMany(RoundResults::class)->orderBy('tier')->orderBy('rank');
     }
 
     /**

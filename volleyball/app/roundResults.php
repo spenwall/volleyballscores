@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Games;
 
-class roundResults extends Model
+class RoundResults extends Model
 {
     public function team()
     {
