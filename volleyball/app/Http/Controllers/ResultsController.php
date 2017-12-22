@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\team;
+use App\Team;
 use App\Games;
 use App\Rounds;
-use App\roundResults;
+use App\RoundResults;
 use App\League;
 
 class ResultsController extends Controller

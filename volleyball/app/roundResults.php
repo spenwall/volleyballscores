@@ -9,7 +9,7 @@ class RoundResults extends Model
 {
     public function team()
     {
-        return $this->belongsTo(team::Class);
+        return $this->belongsTo(Team::Class);
     }
 
     public function rounds()
@@ -141,7 +141,7 @@ class RoundResults extends Model
         }
         if ($newTier < 1) {
             $newTier = 1;
-        } else if ($newTier > team::lowestTier($this->league_id)) {
+        } else if ($newTier > Team::lowestTier($this->league_id)) {
             $newTier = $this->tier;
         }
 
@@ -176,19 +176,19 @@ class RoundResults extends Model
             case 5:
                 return 5;
             case 6:
-                if ($this->tier == team::lowestTier($this->league_id)) {
+                if ($this->tier == Team::lowestTier($this->league_id)) {
                     return 6;
                 } else {
                     return 1;
                 }
             case 7:
-                if ($this->tier == team::lowestTier($this->league_id)) {
+                if ($this->tier == Team::lowestTier($this->league_id)) {
                     return 7;
                 } else {
                     return 2;
                 }
             case 8:
-            if ($this->tier == team::lowestTier($this->league_id)) {
+            if ($this->tier == Team::lowestTier($this->league_id)) {
                 return 8;
             } else {
                 return 3;

@@ -29,6 +29,6 @@ class User extends Authenticatable
 
     public function team()
     {
-        return $this->belongsTo(team::class);
+        return $this->belongsTo(Team::class);
     }
 }

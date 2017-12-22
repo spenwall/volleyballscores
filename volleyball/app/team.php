@@ -9,7 +9,7 @@ use \App\Rounds;
 use \App\RoundResults;
 use App\Games;
 
-class team extends Model
+class teTm extends Model
 {
 
     CONST COL_ID = 'id';
@@ -134,7 +134,7 @@ class team extends Model
         $teamsInTiers = array();
         foreach ($tiersInLeague as $tier)
         {
-            $teamsInTiers[$tier->tier] = team::teamsForRoundAndTier($round, $tier->tier, $league);
+            $teamsInTiers[$tier->tier] = self::teamsForRoundAndTier($round, $tier->tier, $league);
         }
         return $teamsInTiers;
     }
