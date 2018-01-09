@@ -9,7 +9,7 @@ use \App\Rounds;
 use \App\RoundResults;
 use App\Games;
 
-class teTm extends Model
+class Team extends Model
 {
 
     CONST COL_ID = 'id';

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Team;
 use App\Games;
 use App\Rounds;
 use App\RoundResults;
