@@ -29,16 +29,6 @@ class Rounds extends Model
     }
 
     /**
-     * Round results for a given tier
-     * 
-     * @return RoundResults
-     */
-    public function roundResultsForTier($tier)
-    {
-        return $this->roundResults()->where('tier', $tier)->get();
-    }
-
-    /**
      * All Round results grouped by tier
      * 
      * @return RoundResults
