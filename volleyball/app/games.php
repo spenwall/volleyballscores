@@ -13,6 +13,11 @@ class Games extends Model
         'date',
     ];
 
+    /**
+     * Returns the league for a certain game
+     * 
+     * return Leauge
+     */
     public function league()
     {
         return $this->belongsTo(League::class);
