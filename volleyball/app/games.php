@@ -23,18 +23,6 @@ class Games extends Model
         return $this->belongsTo(League::class);
     }
 
-    public static function gamesInTierRound($tier, $round, $League)
-    {
-        $where = ['tier' => $tier, 'rounds_id' => $round, 'league_id' => $league];
-        $games = self::where($where)
-        ->orderBy('date')
-        ->orderBy('location')
-        ->orderBy('court')
-        ->get();
-       
-        return $games;
-    }
-
     public function team1()
     {
         return $this->getTeam($this->team1);
