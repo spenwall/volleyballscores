@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use \Carbon\carbon;
+use Carbon\Carbon;
 
 class League extends Model
 {
@@ -46,7 +46,7 @@ class League extends Model
 
     public function currentRound()
     {
-        $current = carbon::now();
+        $current = Carbon::now();
         return $this->rounds->where('start', '<', $current)
         ->where('end', '>', $current)
         ->first();
@@ -64,7 +64,7 @@ class League extends Model
 
     public function roundsToDate()
     {
-        $current = carbon::now();
+        $current = Carbon::now();
         return $this->rounds->where('start', '<', $current)->sortBy('round');
     }
 

@@ -71,7 +71,7 @@
                         @endforeach
                         
                         @guest
-                            <li><a href="{{ route('record') }}">Record Scroe</a></li>
+                            <li><a href="{{ route('record') }}">Record Scores</a></li>
                         @else
                             <li><a href="{{ route('record') }}">Record Scores</a></li>
                             <li class="dropdown">
